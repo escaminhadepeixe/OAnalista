@@ -1,0 +1,11 @@
+{
+  "name": "o-analista-financas",
+  "version": "1.0.0",
+  "description": "Plataforma de venda de ebooks — O Analista Finanças",
+  "dependencies": {
+    "@supabase/supabase-js": "^2.39.0"
+  },
+  "devDependencies": {
+    "wrangler": "^3.0.0"
+  }
+}

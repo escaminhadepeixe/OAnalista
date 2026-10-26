@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Acessar minha biblioteca — O Analista Finanças</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+  <style>
+    :root{--bg:#FFFFFF;--bg-subtle:#F7F8FA;--nav:#0D1B2E;--text:#1A1F2E;--muted:#6B7280;--border:#E5E7EB;--accent:#1B56D6;--accent-hover:#1445B0;--green:#16A34A}
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:'Inter',system-ui,sans-serif;background:var(--bg-subtle);color:var(--text);font-size:15px;line-height:1.6;min-height:100vh;display:flex;flex-direction:column}
+    a{color:var(--accent);text-decoration:none}
+    a:hover{text-decoration:underline}
+    header{background:var(--nav);padding:0 40px;height:56px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
+    .logo{font-family:'Georgia',serif;font-size:18px;font-weight:700;color:#F1F5F9;text-decoration:none}
+    main{flex:1;display:flex;align-items:center;justify-content:center;padding:40px 20px}
+    .card{background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:48px 40px;max-width:420px;width:100%;box-shadow:0 4px 24px rgba(0,0,0,.06)}
+    .logo-block{text-align:center;margin-bottom:28px}
+    .logo-block .site-name{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:var(--nav);display:block}
+    .logo-block p{font-size:13px;color:var(--muted);margin-top:4px}
+    h2{font-size:20px;font-weight:700;margin-bottom:6px}
+    .subtitle{font-size:14px;color:var(--muted);margin-bottom:24px}
+    label{display:block;font-size:13px;font-weight:500;margin-bottom:5px}
+    input{width:100%;padding:11px 14px;border:1px solid var(--border);border-radius:6px;font-size:15px;font-family:inherit;color:var(--text);margin-bottom:16px;transition:border-color .15s}
+    input:focus{outline:none;border-color:var(--accent)}
+    .btn{display:block;width:100%;background:var(--accent);color:#fff;border:none;border-radius:6px;padding:13px;font-size:15px;font-weight:600;cursor:pointer;font-family:inherit;transition:background .15s}
+    .btn:hover{background:var(--accent-hover)}
+    .btn:disabled{background:#9CA3AF;cursor:not-allowed}
+    .divider{display:flex;align-items:center;gap:12px;margin:20px 0;color:var(--muted);font-size:13px}
+    .divider::before,.divider::after{content:'';flex:1;border-top:1px solid var(--border)}
+
+    /* Estado: link enviado */
+    .sent-state{display:none;text-align:center}
+    .sent-state.show{display:block}
+    .form-state.hide{display:none}
+    .mail-icon{font-size:48px;margin-bottom:16px;display:block}
+    .sent-state h3{font-size:18px;font-weight:700;margin-bottom:8px}
+    .sent-state p{font-size:14px;color:var(--muted);margin-bottom:20px;line-height:1.6}
+    .link-email{font-weight:600;color:var(--text)}
+    .btn-outline{display:block;width:100%;background:transparent;color:var(--accent);border:1px solid var(--accent);border-radius:6px;padding:12px;font-size:14px;font-weight:500;cursor:pointer;font-family:inherit;margin-top:10px;transition:all .15s}
+    .btn-outline:hover{background:var(--accent);color:#fff}
+
+    /* Biblioteca */
+    .library-state{display:none}
+    .library-state.show{display:block}
+    .library-title{font-size:17px;font-weight:700;margin-bottom:16px}
+    .ebook-item{display:flex;align-items:center;gap:14px;padding:14px;border:1px solid var(--border);border-radius:8px;margin-bottom:10px;cursor:pointer;transition:border-color .15s;text-decoration:none;color:var(--text)}
+    .ebook-item:hover{border-color:var(--accent)}
+    .ebook-item svg{border-radius:3px;box-shadow:0 2px 6px rgba(0,0,0,.2);flex-shrink:0}
+    .ebook-item .info .title{font-size:14px;font-weight:600}
+    .ebook-item .info .status{font-size:12px;color:var(--green)}
+    .footer-note{font-size:12px;color:var(--muted);text-align:center;margin-top:20px}
+    footer{text-align:center;padding:20px;font-size:12px;color:var(--muted);flex-shrink:0}
+  </style>
+</head>
+<body>
+
+<header>
+  <a class="logo" href="home.html">O Analista Finanças</a>
+</header>
+
+<main>
+  <div class="card">
+    <div class="logo-block">
+      <span class="site-name">O Analista Finanças</span>
+      <p>Sua biblioteca de ebooks</p>
+    </div>
+
+    <!-- Estado: form -->
+    <div id="form-state" class="form-state">
+      <h2>Acessar minha biblioteca</h2>
+      <p class="subtitle">Digite o e-mail usado na compra. Vamos enviar um link de acesso.</p>
+      <label for="email">E-mail</label>
+      <input type="email" id="email" placeholder="seuemail@email.com">
+      <button class="btn" onclick="enviarLink()">Enviar link de acesso</button>
+      <div class="divider">ou</div>
+      <a href="home.html" style="display:block;text-align:center;font-size:14px;color:var(--muted)">← Voltar para a loja</a>
+    </div>
+
+    <!-- Estado: link enviado -->
+    <div id="sent-state" class="sent-state">
+      <span class="mail-icon">📬</span>
+      <h3>Link enviado!</h3>
+      <p>Enviamos o link de acesso para <span class="link-email" id="sent-email"></span>. Verifique sua caixa de entrada.</p>
+      <button class="btn" id="btn-acesso-direto" onclick="acessarDireto()">Acessar minha biblioteca →</button>
+      <button class="btn-outline" onclick="voltarForm()">Usar outro e-mail</button>
+      <p class="footer-note">Não recebeu? Verifique a pasta de spam ou <a href="home.html">fale conosco</a>.</p>
+    </div>
+
+    <!-- Estado: biblioteca -->
+    <div id="library-state" class="library-state">
+      <p class="library-title">Minha biblioteca</p>
+      <div id="ebook-list"></div>
+      <p class="footer-note">Para acessar de outro dispositivo, use o link enviado para o seu e-mail.</p>
+      <div class="divider"></div>
+      <a href="#" onclick="sair(event)" style="font-size:13px;color:var(--muted);display:block;text-align:center">Sair da conta</a>
+    </div>
+  </div>
+</main>
+
+<footer>© 2024 O Analista Finanças · O Analista</footer>
+
+<script>
+  const produtos = {
+    financas: { titulo: 'Finanças Pessoais na Prática', emoji: '💰', bg: '#0D1B2E', reader: 'reader-financas.html' },
+    cripto:   { titulo: 'Renda Passiva em Criptomoedas', emoji: '₿', bg: '#0F2218', reader: 'reader-cripto.html' }
+  };
+
+  // Se já logado, mostrar biblioteca diretamente
+  if (localStorage.getItem('fd_logado') === '1') {
+    showLibrary();
+  }
+
+  function enviarLink() {
+    const email = document.getElementById('email').value.trim();
+    if (!email || !email.includes('@')) { alert('Digite um e-mail válido.'); return; }
+    document.getElementById('sent-email').textContent = email;
+
+    const savedEmail = localStorage.getItem('fd_email');
+    if (email === savedEmail) {
+      localStorage.setItem('fd_logado', '1');
+    }
+
+    document.getElementById('form-state').classList.add('hide');
+    document.getElementById('sent-state').classList.add('show');
+  }
+
+  function acessarDireto() {
+    if (localStorage.getItem('fd_logado') === '1') {
+      showLibrary();
+    } else {
+      alert('Não encontramos uma compra com esse e-mail. Verifique o endereço ou compre um ebook.');
+      voltarForm();
+    }
+  }
+
+  function voltarForm() {
+    document.getElementById('sent-state').classList.remove('show');
+    document.getElementById('form-state').classList.remove('hide');
+  }
+
+  function showLibrary() {
+    document.getElementById('form-state').classList.add('hide');
+    document.getElementById('sent-state').classList.remove('show');
+    document.getElementById('library-state').classList.add('show');
+
+    const purchases = JSON.parse(localStorage.getItem('fd_purchases') || '["financas"]');
+    const list = document.getElementById('ebook-list');
+    list.innerHTML = '';
+
+    purchases.forEach(id => {
+      const p = produtos[id];
+      if (!p) return;
+      const a = document.createElement('a');
+      a.href = p.reader;
+      a.className = 'ebook-item';
+      a.innerHTML = `
+        <svg width="40" height="56" viewBox="0 0 40 56" xmlns="http://www.w3.org/2000/svg">
+          <rect width="40" height="56" rx="2" fill="${p.bg}"/>
+          <text x="20" y="34" text-anchor="middle" font-size="18">${p.emoji}</text>
+        </svg>
+        <div class="info">
+          <div class="title">${p.titulo}</div>
+          <div class="status">✓ Acesso liberado</div>
+        </div>
+      `;
+      list.appendChild(a);
+    });
+  }
+
+  function sair(e) {
+    e.preventDefault();
+    localStorage.removeItem('fd_logado');
+    window.location.href = 'home.html';
+  }
+</script>
+</body>
+</html>

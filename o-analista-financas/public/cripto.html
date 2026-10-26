@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Renda Passiva em Criptomoedas — O Analista Finanças</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg:#FFFFFF; --bg-subtle:#F7F8FA; --nav:#0D1B2E;
+      --text:#1A1F2E; --muted:#6B7280; --border:#E5E7EB;
+      --accent:#16A34A; --accent-hover:#15803D;
+      --price:#DC2626; --green:#16A34A;
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--text);font-size:15px;line-height:1.6}
+    a{color:inherit;text-decoration:none}
+    .topbar{background:var(--nav);color:#94A3B8;font-size:12px;text-align:center;padding:7px 16px}
+    header{background:var(--bg);border-bottom:1px solid var(--border);padding:0 40px;height:60px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+    .logo{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:var(--nav)}
+    .header-actions{display:flex;align-items:center;gap:20px;font-size:14px;color:var(--muted)}
+    .header-actions a:hover{color:var(--text)}
+    .breadcrumb{background:var(--bg-subtle);border-bottom:1px solid var(--border);padding:10px 40px;font-size:12px;color:var(--muted)}
+    .breadcrumb span{color:var(--text)}
+
+    .product{max-width:1080px;margin:32px auto;padding:0 40px;display:grid;grid-template-columns:280px 1fr 260px;gap:40px;align-items:start}
+    .cover-wrap{position:sticky;top:80px}
+    .cover-wrap svg{width:100%;height:auto;border-radius:4px;box-shadow:0 8px 24px rgba(0,0,0,.18);display:block}
+    .cover-badge{margin-top:12px;text-align:center;font-size:12px;color:var(--muted)}
+
+    .product-info h1{font-family:'Playfair Display',serif;font-size:26px;font-weight:700;line-height:1.3;margin-bottom:8px}
+    .product-info .subtitle{font-size:16px;color:var(--muted);margin-bottom:16px}
+    .stars{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--muted);margin-bottom:20px}
+    .stars .star-icons{color:#F59E0B;letter-spacing:1px}
+    .divider{border:none;border-top:1px solid var(--border);margin:20px 0}
+    .product-info h2{font-size:15px;font-weight:600;margin-bottom:12px}
+    .benefit-list{list-style:none;display:flex;flex-direction:column;gap:9px}
+    .benefit-list li{display:flex;align-items:flex-start;gap:10px;font-size:14px}
+    .benefit-list li .check{color:var(--green);font-size:15px;margin-top:1px;flex-shrink:0}
+    .spec-table{width:100%;border-collapse:collapse;margin-top:16px;font-size:13px}
+    .spec-table tr{border-bottom:1px solid var(--border)}
+    .spec-table td{padding:9px 4px}
+    .spec-table td:first-child{color:var(--muted);width:40%}
+
+    .purchase-box{border:1px solid var(--border);border-radius:8px;padding:24px 20px;position:sticky;top:80px}
+    .price-block{margin-bottom:20px}
+    .price-label{font-size:12px;color:var(--muted);margin-bottom:2px}
+    .price-main{font-size:30px;font-weight:700;color:var(--price);line-height:1}
+    .price-main sup{font-size:16px;vertical-align:super;font-weight:600}
+    .price-sub{font-size:12px;color:var(--muted);margin-top:4px}
+    .btn-buy{display:block;width:100%;background:var(--accent);color:#fff;border:none;border-radius:6px;padding:13px;font-size:15px;font-weight:600;cursor:pointer;text-align:center;margin-bottom:10px;transition:background .15s}
+    .btn-buy:hover{background:var(--accent-hover)}
+    .btn-pix{display:block;width:100%;background:var(--bg);color:var(--text);border:1px solid var(--border);border-radius:6px;padding:12px;font-size:14px;font-weight:500;cursor:pointer;text-align:center;margin-bottom:16px;transition:border-color .15s,background .15s}
+    .btn-pix:hover{background:var(--bg-subtle);border-color:#9CA3AF}
+    .trust-list{list-style:none;display:flex;flex-direction:column;gap:8px;font-size:12px;color:var(--muted);border-top:1px solid var(--border);padding-top:16px}
+    .trust-list li{display:flex;align-items:center;gap:7px}
+
+    .disclaimer{background:#FFF9EC;border:1px solid #FDE68A;border-radius:6px;padding:14px 16px;font-size:13px;color:#78350F;margin-top:16px;line-height:1.5}
+
+    .section-wrap{background:var(--bg-subtle);border-top:1px solid var(--border);padding:56px 40px}
+    .section-inner{max-width:1080px;margin:0 auto}
+    .section-inner h2{font-size:20px;font-weight:700;margin-bottom:24px}
+    .modules-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px}
+    .module-card{background:var(--bg);border:1px solid var(--border);border-radius:6px;padding:18px 16px}
+    .module-number{font-size:11px;font-weight:600;color:var(--accent);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px}
+    .module-card h3{font-size:14px;font-weight:600;margin-bottom:6px;line-height:1.4}
+    .module-card p{font-size:13px;color:var(--muted);line-height:1.5}
+
+    .testimonials-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px}
+    .testimonial-card{background:var(--bg);border:1px solid var(--border);border-radius:6px;padding:20px}
+    .testimonial-card .stars-small{color:#F59E0B;font-size:13px;margin-bottom:10px}
+    .testimonial-card p{font-size:14px;line-height:1.6;margin-bottom:14px}
+    .testimonial-card .author{font-size:13px;color:var(--muted);font-weight:500}
+
+    footer{background:var(--nav);color:#64748B;padding:40px;font-size:13px}
+    .footer-inner{max-width:1080px;margin:0 auto;display:flex;justify-content:space-between;align-items:flex-start;gap:40px}
+    .footer-logo{font-family:'Playfair Display',serif;font-size:18px;color:#F1F5F9;margin-bottom:8px}
+    .footer-copy{font-size:12px;color:#475569;margin-top:8px}
+    .footer-links{display:flex;flex-direction:column;gap:8px}
+    .footer-links a{color:#64748B}
+    .footer-links a:hover{color:#94A3B8}
+
+    @media(max-width:900px){
+      .product{grid-template-columns:1fr;padding:0 20px}
+      .cover-wrap{position:static;max-width:220px;margin:0 auto}
+      .purchase-box{position:static}
+      header,.breadcrumb,.section-wrap,footer{padding-left:20px;padding-right:20px}
+    }
+  </style>
+</head>
+<body>
+
+<div class="topbar">Entrega imediata por e-mail &nbsp;·&nbsp; Pagamento 100% seguro &nbsp;·&nbsp; Acesso vitalício</div>
+
+<header>
+  <a class="logo" href="home.html">O Analista Finanças</a>
+  <div class="header-actions">
+    <a href="home.html">← Voltar</a>
+    <a href="login.html">Já comprei</a>
+  </div>
+</header>
+
+<div class="breadcrumb">
+  <a href="home.html">Início</a> &rsaquo; <a href="home.html#catalogo">Ebooks</a> &rsaquo; <span>Renda Passiva em Criptomoedas</span>
+</div>
+
+<div class="product">
+
+  <!-- Capa -->
+  <div class="cover-wrap">
+    <svg viewBox="0 0 220 308" xmlns="http://www.w3.org/2000/svg">
+      <rect width="220" height="308" rx="4" fill="#0F2218"/>
+      <rect x="0" y="0" width="12" height="308" rx="2" fill="#153320"/>
+      <rect x="18" y="26" width="184" height="2" fill="#16A34A" opacity=".7"/>
+      <rect x="18" y="278" width="184" height="2" fill="#16A34A" opacity=".7"/>
+      <text x="110" y="108" text-anchor="middle" font-size="52" fill="#34D399">₿</text>
+      <text x="110" y="150" text-anchor="middle" font-family="Georgia,serif" font-size="17" font-weight="700" fill="#E2E8F0">Renda Passiva</text>
+      <text x="110" y="172" text-anchor="middle" font-family="Georgia,serif" font-size="17" font-weight="700" fill="#E2E8F0">em</text>
+      <text x="110" y="194" text-anchor="middle" font-family="Georgia,serif" font-size="17" font-weight="700" fill="#E2E8F0">Criptomoedas</text>
+      <rect x="40" y="210" width="140" height="1" fill="#16A34A" opacity=".4"/>
+      <text x="110" y="232" text-anchor="middle" font-family="Georgia,serif" font-size="11" fill="#6EE7B7">Acumule frações de Bitcoin</text>
+      <text x="110" y="248" text-anchor="middle" font-family="Georgia,serif" font-size="11" fill="#6EE7B7">sem gastar nada do seu bolso</text>
+      <text x="110" y="268" text-anchor="middle" font-family="Arial" font-size="9" fill="#374151"></text>
+    </svg>
+    <p class="cover-badge">Formato digital · Acesso online</p>
+  </div>
+
+  <!-- Info -->
+  <div class="product-info">
+    <h1>Renda Passiva em Criptomoedas</h1>
+    <p class="subtitle">Acumule frações de Bitcoin e outros criptoativos sem gastar nada do seu bolso</p>
+    <div class="stars">
+      <span class="star-icons">★★★★★</span>
+      <strong>5.0</strong>
+      <span>· 21 avaliações</span>
+    </div>
+    <hr class="divider">
+    <h2>O que você vai aprender</h2>
+    <ul class="benefit-list">
+      <li><span class="check">✓</span> Como acumular criptomoedas passivamente sem investir nenhum capital próprio</li>
+      <li><span class="check">✓</span> A estratégia de HODL que transformou moedas de graça em fortunas no passado</li>
+      <li><span class="check">✓</span> O programa de raspadinhas semanais gratuitas da Brasil Bitcoin — e como entrar</li>
+      <li><span class="check">✓</span> Como ganhar tokens BAT só por usar o navegador Brave no dia a dia</li>
+      <li><span class="check">✓</span> Como monetizar o Bluetooth do celular com a rede Nodle (DePIN)</li>
+      <li><span class="check">✓</span> Como transformar o excedente da sua internet em criptomoeda com o Honeygain</li>
+    </ul>
+    <hr class="divider">
+    <h2>Detalhes do produto</h2>
+    <table class="spec-table">
+      <tr><td>Formato</td><td>Acesso online (web reader)</td></tr>
+      <tr><td>Idioma</td><td>Português (Brasil)</td></tr>
+      <tr><td>Acesso</td><td>Vitalício</td></tr>
+      <tr><td>Autor</td><td>O Analista</td></tr>
+      <tr><td>Nível</td><td>Iniciante</td></tr>
+    </table>
+  </div>
+
+  <!-- Compra -->
+  <div class="purchase-box">
+    <div class="price-block">
+      <p class="price-label">Preço</p>
+      <p class="price-main"><sup>R$</sup> 29<sup>,90</sup></p>
+      <p class="price-sub">ou em até 3× sem juros no cartão</p>
+    </div>
+    <button class="btn-buy" onclick="window.location.href='checkout.html?produto=cripto'">Comprar com cartão</button>
+    <button class="btn-pix" onclick="window.location.href='checkout.html?produto=cripto&pix=1'">Pagar com PIX</button>
+    <ul class="trust-list">
+      <li><span>🔒</span> Pagamento 100% seguro</li>
+      <li><span>📧</span> Acesso imediato por e-mail</li>
+      <li><span>♾️</span> Acesso vitalício ao conteúdo</li>
+    </ul>
+    <div class="disclaimer">⚠️ Material educativo. Nenhuma estratégia garante lucro. Faça sempre sua própria pesquisa.</div>
+  </div>
+
+</div>
+
+<!-- Módulos -->
+<div class="section-wrap">
+  <div class="section-inner">
+    <h2>Conteúdo do ebook</h2>
+    <div class="modules-grid">
+      <div class="module-card">
+        <div class="module-number">Módulo 1</div>
+        <h3>Brasil Bitcoin & Raspadinhas Semanais</h3>
+        <p>Como se cadastrar no programa, o depósito único de R$10 que continua sendo seu, e como resgatar a raspadinha toda semana.</p>
+      </div>
+      <div class="module-card">
+        <div class="module-number">Módulo 2</div>
+        <h3>Brave Browser & Recompensas BAT</h3>
+        <p>Troque o navegador que você já usa pelo Brave e receba tokens mensalmente só por navegar — sem nenhum esforço extra.</p>
+      </div>
+      <div class="module-card">
+        <div class="module-number">Módulo 3</div>
+        <h3>Nodle Network & Conectividade DePIN</h3>
+        <p>Como o app Nodle usa o Bluetooth do seu celular para gerar tokens NODL enquanto você simplesmente se desloca no dia a dia.</p>
+      </div>
+      <div class="module-card">
+        <div class="module-number">Módulo 4</div>
+        <h3>Honeygain & JumpTask (JMPT)</h3>
+        <p>Compartilhe a banda de internet que você não usa e converta em criptomoeda — sem limite mínimo de saque no modo JumpTask.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Depoimentos -->
+<div class="section-wrap" style="background:var(--bg);border-top:1px solid var(--border)">
+  <div class="section-inner">
+    <h2>O que quem leu está falando</h2>
+    <div class="testimonials-grid">
+      <div class="testimonial-card">
+        <div class="stars-small">★★★★★</div>
+        <p>Instalei o Brave, me cadastrei na Brasil Bitcoin e coloquei o Nodle no celular em menos de uma tarde. Agora é só esperar acumular. Conteúdo direto ao ponto.</p>
+        <div class="author">Bruno M. · Recife, PE</div>
+      </div>
+      <div class="testimonial-card">
+        <div class="stars-small">★★★★★</div>
+        <p>Já usava o Brave mas nem sabia que dava pra ganhar BAT. Com esse ebook aprendi a ativar as recompensas e também entrei no programa da Brasil Bitcoin. Vale muito.</p>
+        <div class="author">Fernanda L. · Florianópolis, SC</div>
+      </div>
+      <div class="testimonial-card">
+        <div class="stars-small">★★★★★</div>
+        <p>O módulo do Honeygain com JumpTask foi o que mais me surpreendeu. Não sabia que era possível sacar antes de acumular 20 dólares. Já saquei meu primeiro JMPT.</p>
+        <div class="author">Carlos A. · Porto Alegre, RS</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <div>
+      <div class="footer-logo">O Analista Finanças</div>
+      <p>Conteúdo prático sobre finanças pessoais e criptomoedas.</p>
+      <p class="footer-copy">© 2024 O Analista · Todos os direitos reservados</p>
+    </div>
+    <div class="footer-links">
+      <a href="#">Política de privacidade</a>
+      <a href="#">Termos de uso</a>
+      <a href="#">Contato</a>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Compra confirmada! — O Analista Finanças</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+  <style>
+    :root{--bg:#FFFFFF;--bg-subtle:#F7F8FA;--nav:#0D1B2E;--text:#1A1F2E;--muted:#6B7280;--border:#E5E7EB;--accent:#1B56D6;--accent-hover:#1445B0;--green:#16A34A}
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:'Inter',system-ui,sans-serif;background:var(--bg-subtle);color:var(--text);font-size:15px;line-height:1.6;min-height:100vh;display:flex;flex-direction:column}
+    a{color:inherit;text-decoration:none}
+    header{background:var(--nav);padding:0 40px;height:56px;display:flex;align-items:center;flex-shrink:0}
+    .logo{font-family:'Georgia',serif;font-size:18px;font-weight:700;color:#F1F5F9}
+    main{flex:1;display:flex;align-items:center;justify-content:center;padding:40px 20px}
+    .card{background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:48px 40px;max-width:520px;width:100%;text-align:center;box-shadow:0 4px 24px rgba(0,0,0,.06)}
+    .check-circle{width:72px;height:72px;background:var(--green);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 24px;animation:popIn .4s cubic-bezier(.175,.885,.32,1.275) both}
+    @keyframes popIn{from{transform:scale(0);opacity:0}to{transform:scale(1);opacity:1}}
+    .check-circle svg{width:36px;height:36px}
+    h1{font-size:24px;font-weight:700;margin-bottom:8px}
+    .subtitle{font-size:15px;color:var(--muted);margin-bottom:28px}
+    .email-badge{background:var(--bg-subtle);border:1px solid var(--border);border-radius:6px;padding:10px 16px;font-size:14px;margin-bottom:28px;display:inline-block}
+    .product-box{background:var(--bg-subtle);border:1px solid var(--border);border-radius:8px;padding:16px 20px;display:flex;align-items:center;gap:14px;margin-bottom:28px;text-align:left}
+    .product-box svg{border-radius:3px;box-shadow:0 2px 8px rgba(0,0,0,.2);flex-shrink:0}
+    .product-box .title{font-size:14px;font-weight:600}
+    .product-box .author{font-size:12px;color:var(--muted)}
+    .btn-primary{display:block;background:var(--accent);color:#fff;border:none;border-radius:6px;padding:13px 24px;font-size:15px;font-weight:600;cursor:pointer;text-decoration:none;margin-bottom:12px;transition:background .15s}
+    .btn-primary:hover{background:var(--accent-hover)}
+    .btn-secondary{display:block;color:var(--muted);font-size:13px}
+    .btn-secondary:hover{color:var(--text)}
+    .divider{border:none;border-top:1px solid var(--border);margin:24px 0}
+    .info-list{list-style:none;display:flex;flex-direction:column;gap:10px;text-align:left}
+    .info-list li{display:flex;align-items:flex-start;gap:10px;font-size:13px;color:var(--muted)}
+    .info-list li span.icon{flex-shrink:0;font-size:15px}
+    footer{text-align:center;padding:20px;font-size:12px;color:var(--muted);flex-shrink:0}
+  </style>
+</head>
+<body>
+<header><a class="logo" href="home.html">O Analista Finanças</a></header>
+
+<main>
+  <div class="card">
+    <div class="check-circle">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="20 6 9 17 4 12"/>
+      </svg>
+    </div>
+
+    <h1>Compra confirmada! 🎉</h1>
+    <p class="subtitle">Seu acesso foi liberado. Enviamos o link para:</p>
+    <div class="email-badge" id="email-display">seu@email.com</div>
+
+    <div class="product-box">
+      <svg id="cover-svg" width="44" height="62" viewBox="0 0 44 62" xmlns="http://www.w3.org/2000/svg">
+        <rect width="44" height="62" rx="2" fill="#0D1B2E"/>
+        <text x="22" y="36" text-anchor="middle" font-size="18" fill="#F8D174">💰</text>
+      </svg>
+      <div>
+        <div class="title" id="product-title">Finanças Pessoais na Prática</div>
+        <div class="author">O Analista Finanças</div>
+      </div>
+    </div>
+
+    <a class="btn-primary" id="btn-acessar" href="reader-financas.html">Acessar o ebook agora →</a>
+    <a class="btn-secondary" href="home.html">Voltar para a loja</a>
+
+    <hr class="divider">
+
+    <ul class="info-list">
+      <li><span class="icon">📧</span><span>O link de acesso também foi enviado para o seu e-mail. Guarde-o para acessar de outros dispositivos.</span></li>
+      <li><span class="icon">♾️</span><span>Seu acesso é vitalício. Você pode ler quando e quantas vezes quiser.</span></li>
+    </ul>
+  </div>
+</main>
+
+<footer>© 2024 O Analista Finanças</footer>
+
+<script>
+  const params  = new URLSearchParams(window.location.search);
+  const produto = params.get('produto') || localStorage.getItem('fd_produto') || 'financas';
+  const email   = localStorage.getItem('fd_email') || 'seu@email.com';
+  document.getElementById('email-display').textContent = email;
+
+  const produtos = {
+    financas: { titulo: 'Finanças Pessoais na Prática',  emoji: '💰', bg: '#0D1B2E', reader: 'reader-financas.html' },
+    cripto:   { titulo: 'Renda Passiva em Criptomoedas', emoji: '₿',  bg: '#0F2218', reader: 'reader-cripto.html'   }
+  };
+  const p = produtos[produto] || produtos.financas;
+  document.getElementById('product-title').textContent = p.titulo;
+  document.getElementById('btn-acessar').href = p.reader;
+  document.title = 'Compra confirmada! — ' + p.titulo;
+  document.getElementById('cover-svg').innerHTML =
+    `<rect width="44" height="62" rx="2" fill="${p.bg}"/><text x="22" y="38" text-anchor="middle" font-size="22">${p.emoji}</text>`;
+</script>
+</body>
+</html>
