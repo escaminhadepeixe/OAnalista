@@ -237,9 +237,17 @@
     .then(s => {
       const data = s['financas'];
       if (!data) return;
-      const avg = data.avg_rating || '5.0';
-      const n   = data.reviews   || 0;
-      const leitores = data.leitores || 0;
+      if (!data.avg_rating || !data.reviews) {
+        const ic = document.getElementById('star-icons');
+        const ar = document.getElementById('avg-rating');
+        const rc = document.getElementById('review-count');
+        if (ic) ic.textContent = '';
+        if (ar) ar.textContent = '';
+        if (rc) rc.textContent = '· seja o primeiro a avaliar!';
+        return;
+      }
+      const avg = parseFloat(data.avg_rating);
+      const n   = data.reviews;
       const stars = '★'.repeat(Math.round(avg)) + '☆'.repeat(5 - Math.round(avg));
 
       const ic = document.getElementById('star-icons');
@@ -247,7 +255,7 @@
       const rc = document.getElementById('review-count');
       if (ic) ic.textContent = stars;
       if (ar) ar.textContent = avg;
-      if (rc) rc.textContent = n > 0 ? '· ' + n + ' avaliações' : (leitores > 0 ? '· ' + leitores + ' leitores' : '· seja o primeiro!');
+      if (rc) rc.textContent = '· ' + n + ' avaliações';
     })
     .catch(() => {});
 </script>

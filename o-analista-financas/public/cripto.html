@@ -126,8 +126,7 @@
       <text x="110" y="172" text-anchor="middle" font-family="Georgia,serif" font-size="17" font-weight="700" fill="#E2E8F0">em</text>
       <text x="110" y="194" text-anchor="middle" font-family="Georgia,serif" font-size="17" font-weight="700" fill="#E2E8F0">Criptomoedas</text>
       <rect x="40" y="210" width="140" height="1" fill="#16A34A" opacity=".4"/>
-      <text x="110" y="232" text-anchor="middle" font-family="Georgia,serif" font-size="11" fill="#6EE7B7">Acumule frações de Bitcoin</text>
-      <text x="110" y="248" text-anchor="middle" font-family="Georgia,serif" font-size="11" fill="#6EE7B7">sem gastar nada do seu bolso</text>
+      <text x="110" y="240" text-anchor="middle" font-family="Georgia,serif" font-size="11" fill="#6EE7B7">Estratégias de acúmulo passivo</text>
       <text x="110" y="268" text-anchor="middle" font-family="Arial" font-size="9" fill="#374151"></text>
     </svg>
     <p class="cover-badge">Formato digital · Acesso online</p>
@@ -136,7 +135,7 @@
   <!-- Info -->
   <div class="product-info">
     <h1>Renda Passiva em Criptomoedas</h1>
-    <p class="subtitle">Acumule frações de Bitcoin e outros criptoativos sem gastar nada do seu bolso</p>
+    <p class="subtitle">Estratégias pouco conhecidas para acumular criptoativos de forma passiva</p>
     <div class="stars" id="product-stars">
       <span class="star-icons" id="star-icons">★★★★★</span>
       <strong id="avg-rating">5.0</strong>
@@ -190,22 +189,22 @@
       <div class="module-card">
         <div class="module-number">Módulo 1</div>
         <h3>Recompensas Semanais Gratuitas</h3>
-        <p>Uma corretora brasileira tem um programa pouco divulgado que distribui criptomoedas toda semana para usuários ativos. Você vai descobrir como entrar e nunca perder uma rodada.</p>
+        <p>Um programa mantido por empresa regulamentada que distribui criptoativos recorrentemente para usuários ativos.</p>
       </div>
       <div class="module-card">
         <div class="module-number">Módulo 2</div>
         <h3>Ganhe Criptomoeda Navegando</h3>
-        <p>Um simples ajuste no seu navegador transforma cada sessão de internet em renda passiva. Você não muda nada na sua rotina — só começa a ser pago por ela.</p>
+        <p>Como transformar um hábito cotidiano em renda passiva digital, sem esforço adicional.</p>
       </div>
       <div class="module-card">
         <div class="module-number">Módulo 3</div>
         <h3>Renda com Recursos Ociosos do Celular</h3>
-        <p>Existe um recurso que já está ligado no seu celular o dia todo e que pode gerar tokens automaticamente enquanto você se move — sem consumo extra de bateria ou dados.</p>
+        <p>Um app que funciona em segundo plano e converte a sua presença digital em tokens automaticamente.</p>
       </div>
       <div class="module-card">
         <div class="module-number">Módulo 4</div>
         <h3>Monetize a Internet que Você Já Paga</h3>
-        <p>A banda de internet que você contratou e não usa totalmente pode ser convertida em criptomoeda passivamente, com saques praticamente sem valor mínimo.</p>
+        <p>Como fazer com que algo que você já paga todo mês comece a gerar retorno sem você fazer nada.</p>
       </div>
     </div>
   </div>
@@ -266,9 +265,17 @@
     .then(s => {
       const data = s['cripto'];
       if (!data) return;
-      const avg = data.avg_rating || '5.0';
-      const n   = data.reviews   || 0;
-      const leitores = data.leitores || 0;
+      if (!data.avg_rating || !data.reviews) {
+        const ic = document.getElementById('star-icons');
+        const ar = document.getElementById('avg-rating');
+        const rc = document.getElementById('review-count');
+        if (ic) ic.textContent = '';
+        if (ar) ar.textContent = '';
+        if (rc) rc.textContent = '· seja o primeiro a avaliar!';
+        return;
+      }
+      const avg = parseFloat(data.avg_rating);
+      const n   = data.reviews;
       const stars = '★'.repeat(Math.round(avg)) + '☆'.repeat(5 - Math.round(avg));
 
       const ic = document.getElementById('star-icons');
@@ -276,7 +283,7 @@
       const rc = document.getElementById('review-count');
       if (ic) ic.textContent = stars;
       if (ar) ar.textContent = avg;
-      if (rc) rc.textContent = n > 0 ? '· ' + n + ' avaliações' : (leitores > 0 ? '· ' + leitores + ' leitores' : '· seja o primeiro!');
+      if (rc) rc.textContent = '· ' + n + ' avaliações';
     })
     .catch(() => {});
 </script>

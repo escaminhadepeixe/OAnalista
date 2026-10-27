@@ -155,7 +155,7 @@
         <div class="hero-text">
           <p style="font-size:11px;font-weight:700;color:#34D399;text-transform:uppercase;letter-spacing:.1em;margin-bottom:10px">Criptomoedas · 4 módulos</p>
           <h1>Renda Passiva<br>em Criptomoedas</h1>
-          <p>Como acumular frações de Bitcoin e outros criptoativos sem gastar nada do seu bolso.</p>
+          <p>Estratégias pouco conhecidas para acumular criptoativos de forma passiva.</p>
           <ul style="list-style:none;margin:18px 0 20px;display:flex;flex-direction:column;gap:8px">
             <li style="font-size:13px;color:#94A3B8;display:flex;gap:8px"><span style="color:#34D399;flex-shrink:0">✓</span>Acumule criptoativos sem investir nenhum capital próprio</li>
             <li style="font-size:13px;color:#94A3B8;display:flex;gap:8px"><span style="color:#34D399;flex-shrink:0">✓</span>Uma corretora brasileira que distribui cripto de graça toda semana</li>
@@ -336,7 +336,7 @@ fetch('/api/stats')
     function updateCard(id, data) {
       const el = document.getElementById(id);
       if (!el||!data) return;
-      if (!data.reviews||!data.avg_rating) { el.innerHTML='<span style="color:var(--muted);font-size:12px">Novo</span>'; return; }
+      if (!data.reviews||!data.avg_rating) { el.innerHTML=''; return; }
       const a = parseFloat(data.avg_rating);
       el.innerHTML='<span class="s">'+'★'.repeat(Math.round(a))+'☆'.repeat(5-Math.round(a))+'</span> '+data.avg_rating+' · '+data.reviews+' avaliações';
     }
