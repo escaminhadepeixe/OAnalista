@@ -1,6 +1,14 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-T9G0J2W7JP"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-T9G0J2W7JP');
+  </script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>O Analista Finanças</title>
@@ -108,56 +116,77 @@
   <div class="header-right"><a href="login.html">Já comprei</a></div>
 </header>
 
-<section class="hero">
-  <div class="hero-inner">
-    <div class="hero-text">
-      <h1>Finanças pessoais e criptomoedas sem enrolação</h1>
-      <p>Ebooks práticos para quem quer organizar o dinheiro, começar a investir e acumular criptoativos — do jeito certo e sem gastar uma fortuna.</p>
-      <a href="#catalogo" class="hero-cta">Ver todos os ebooks</a>
-      <div class="hero-stats">
-        <div class="stat-item"><strong id="stat-avaliacoes">+0</strong><span>avaliações</span></div>
-        <div class="stat-item"><strong id="stat-avg">5.0 ★</strong><span>avaliação média</span></div>
+<section class="hero" style="position:relative;overflow:hidden;padding:0">
+  <div id="ht" style="display:flex;will-change:transform;transition:transform .7s cubic-bezier(.4,0,.2,1)">
+
+    <!-- SLIDE 1: Finanças -->
+    <div style="min-width:100%;padding:52px 40px;box-sizing:border-box">
+      <div class="hero-inner">
+        <div class="hero-text">
+          <p style="font-size:11px;font-weight:700;color:#60A5FA;text-transform:uppercase;letter-spacing:.1em;margin-bottom:10px">Finanças pessoais · 15 capítulos</p>
+          <h1>Finanças Pessoais<br>na Prática</h1>
+          <p>Do controle do dinheiro ao portfólio com ações, FIIs, cripto e ativos internacionais.</p>
+          <ul style="list-style:none;margin:18px 0 20px;display:flex;flex-direction:column;gap:8px">
+            <li style="font-size:13px;color:#94A3B8;display:flex;gap:8px"><span style="color:#60A5FA;flex-shrink:0">✓</span>Por que usar o cartão de crédito para tudo é uma estratégia</li>
+            <li style="font-size:13px;color:#94A3B8;display:flex;gap:8px"><span style="color:#60A5FA;flex-shrink:0">✓</span>Reserva de Oportunidade e Emergência — como montar</li>
+            <li style="font-size:13px;color:#94A3B8;display:flex;gap:8px"><span style="color:#60A5FA;flex-shrink:0">✓</span>LCI e LCA: Renda Fixa isenta de IR</li>
+            <li style="font-size:13px;color:#94A3B8;display:flex;gap:8px"><span style="color:#60A5FA;flex-shrink:0">✓</span>FIIs, Ações, cripto e ETFs americanos explicados</li>
+          </ul>
+          <div id="hr-financas" style="margin-bottom:20px;min-height:18px;font-size:13px;color:#64748B"></div>
+          <a href="financas.html" class="hero-cta">Ver produto →</a>
+        </div>
+        <div style="display:flex;justify-content:center;align-items:center">
+          <svg width="188" height="264" viewBox="0 0 188 264" xmlns="http://www.w3.org/2000/svg" style="border-radius:4px;box-shadow:0 12px 40px rgba(0,0,0,.5)">
+            <rect width="188" height="264" rx="3" fill="#0D1B2E"/>
+            <rect x="0" y="0" width="13" height="264" rx="2" fill="#1B3660"/>
+            <rect x="18" y="22" width="152" height="2" fill="#1B56D6" opacity=".9"/>
+            <rect x="18" y="240" width="152" height="2" fill="#1B56D6" opacity=".9"/>
+            <text x="94" y="116" text-anchor="middle" font-size="52" fill="#F8D174">💰</text>
+            <text x="94" y="156" text-anchor="middle" font-family="Georgia,serif" font-size="16" font-weight="700" fill="#F1F5F9">Finanças Pessoais</text>
+            <text x="94" y="176" text-anchor="middle" font-family="Georgia,serif" font-size="16" font-weight="700" fill="#F1F5F9">na Prática</text>
+          </svg>
+        </div>
       </div>
     </div>
-    <div class="hero-books">
-      <!-- Finanças cover -->
-      <svg width="108" height="152" viewBox="0 0 108 152" xmlns="http://www.w3.org/2000/svg">
-        <rect width="108" height="152" rx="3" fill="#0D1B2E"/>
-        <rect x="0" y="0" width="9" height="152" rx="2" fill="#1B3660"/>
-        <rect x="14" y="15" width="80" height="1.5" fill="#1B56D6" opacity=".8"/>
-        <rect x="14" y="135" width="80" height="1.5" fill="#1B56D6" opacity=".8"/>
-        <text x="54" y="68" text-anchor="middle" font-size="28" fill="#F8D174">💰</text>
-        <text x="54" y="90" text-anchor="middle" font-family="Georgia,serif" font-size="10" font-weight="700" fill="#F1F5F9">Finanças</text>
-        <text x="54" y="104" text-anchor="middle" font-family="Georgia,serif" font-size="10" font-weight="700" fill="#F1F5F9">Pessoais</text>
-        <text x="54" y="118" text-anchor="middle" font-family="Georgia,serif" font-size="10" font-weight="700" fill="#F1F5F9">na Prática</text>
-        <text x="54" y="128" text-anchor="middle" font-family="Arial" font-size="7" fill="#475569"></text>
-      </svg>
-      <!-- Crypto cover (larger, centered) -->
-      <svg width="132" height="185" viewBox="0 0 132 185" xmlns="http://www.w3.org/2000/svg">
-        <rect width="132" height="185" rx="3" fill="#0F2218"/>
-        <rect x="0" y="0" width="10" height="185" rx="2" fill="#153320"/>
-        <rect x="15" y="17" width="102" height="1.5" fill="#16A34A" opacity=".7"/>
-        <rect x="15" y="166" width="102" height="1.5" fill="#16A34A" opacity=".7"/>
-        <text x="66" y="84" text-anchor="middle" font-size="34" fill="#34D399">₿</text>
-        <text x="66" y="108" text-anchor="middle" font-family="Georgia,serif" font-size="11" font-weight="700" fill="#E2E8F0">Renda Passiva</text>
-        <text x="66" y="124" text-anchor="middle" font-family="Georgia,serif" font-size="11" font-weight="700" fill="#E2E8F0">em Cripto</text>
-        <text x="66" y="150" text-anchor="middle" font-family="Arial" font-size="8" fill="#374151"></text>
-      </svg>
+
+    <!-- SLIDE 2: Cripto -->
+    <div style="min-width:100%;padding:52px 40px;box-sizing:border-box">
+      <div class="hero-inner">
+        <div class="hero-text">
+          <p style="font-size:11px;font-weight:700;color:#34D399;text-transform:uppercase;letter-spacing:.1em;margin-bottom:10px">Criptomoedas · 4 módulos</p>
+          <h1>Renda Passiva<br>em Criptomoedas</h1>
+          <p>Como acumular frações de Bitcoin e outros criptoativos sem gastar nada do seu bolso.</p>
+          <ul style="list-style:none;margin:18px 0 20px;display:flex;flex-direction:column;gap:8px">
+            <li style="font-size:13px;color:#94A3B8;display:flex;gap:8px"><span style="color:#34D399;flex-shrink:0">✓</span>Acumule Bitcoin sem investir nenhum capital próprio</li>
+            <li style="font-size:13px;color:#94A3B8;display:flex;gap:8px"><span style="color:#34D399;flex-shrink:0">✓</span>Raspadinhas semanais gratuitas da Brasil Bitcoin</li>
+            <li style="font-size:13px;color:#94A3B8;display:flex;gap:8px"><span style="color:#34D399;flex-shrink:0">✓</span>Ganhe tokens BAT navegando com o Brave</li>
+            <li style="font-size:13px;color:#94A3B8;display:flex;gap:8px"><span style="color:#34D399;flex-shrink:0">✓</span>Monetize o Bluetooth do celular com a Nodle Network</li>
+          </ul>
+          <div id="hr-cripto" style="margin-bottom:20px;min-height:18px;font-size:13px;color:#64748B"></div>
+          <a href="cripto.html" class="hero-cta" style="background:#16A34A" onmouseover="this.style.background='#15803D'" onmouseout="this.style.background='#16A34A'">Ver produto →</a>
+        </div>
+        <div style="display:flex;justify-content:center;align-items:center">
+          <svg width="188" height="264" viewBox="0 0 188 264" xmlns="http://www.w3.org/2000/svg" style="border-radius:4px;box-shadow:0 12px 40px rgba(0,0,0,.5)">
+            <rect width="188" height="264" rx="3" fill="#0F2218"/>
+            <rect x="0" y="0" width="13" height="264" rx="2" fill="#153320"/>
+            <rect x="18" y="22" width="152" height="2" fill="#16A34A" opacity=".7"/>
+            <rect x="18" y="240" width="152" height="2" fill="#16A34A" opacity=".7"/>
+            <text x="94" y="116" text-anchor="middle" font-size="56" fill="#34D399">₿</text>
+            <text x="94" y="156" text-anchor="middle" font-family="Georgia,serif" font-size="16" font-weight="700" fill="#E2E8F0">Renda Passiva</text>
+            <text x="94" y="176" text-anchor="middle" font-family="Georgia,serif" font-size="16" font-weight="700" fill="#E2E8F0">em Criptomoedas</text>
+          </svg>
+        </div>
+      </div>
     </div>
+
   </div>
+
+  <!-- Dots de navegação -->
+  <div style="position:absolute;bottom:18px;left:50%;transform:translateX(-50%);display:flex;gap:8px;z-index:10" id="hd"></div>
 </section>
 
 
 
-<!-- ── CARROSSEL DE PRODUTOS ── -->
-<section style="background:var(--bg);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:44px 40px">
-  <div style="max-width:1080px;margin:0 auto">
-    <div style="overflow:hidden">
-      <div id="pc-slides" style="display:flex;transition:transform .5s cubic-bezier(.4,0,.2,1)"></div>
-    </div>
-    <div id="pc-dots" style="display:flex;justify-content:center;gap:8px;margin-top:22px"></div>
-  </div>
-</section>
 <section class="catalog" id="catalogo">
   <div class="catalog-header">
     <h2>Nossos ebooks</h2>
@@ -254,129 +283,81 @@
 </footer>
 
 
-<script>
-const produtosCarrossel = [
-  {
-    id: 'financas',
-    titulo: 'Finanças Pessoais na Prática',
-    linha1: 'Finanças Pessoais', linha2: 'na Prática',
-    categoria: 'Finanças pessoais',
-    desc: 'Do controle do dinheiro ao portfólio com ações, FIIs, cripto e ativos internacionais.',
-    emoji: '💰', bg: '#0D1B2E', bgSpine: '#1B3660', url: 'financas.html'
-  },
-  {
-    id: 'cripto',
-    titulo: 'Renda Passiva em Criptomoedas',
-    linha1: 'Renda Passiva', linha2: 'em Criptomoedas',
-    categoria: 'Criptomoedas',
-    desc: 'Como acumular frações de Bitcoin e outros criptoativos sem gastar nada do seu bolso.',
-    emoji: '₿', bg: '#0F2218', bgSpine: '#153320', url: 'cripto.html'
-  }
-];
 
+
+<script>
+// ── Carrossel hero ──────────────────────────────────────────────────────
+const track = document.getElementById('ht');
+const dotsW  = document.getElementById('hd');
+const total  = 2;
+let cur = 0;
+
+[0,1].forEach(i => {
+  const d = document.createElement('button');
+  d.style.cssText = 'height:6px;border-radius:3px;border:none;cursor:pointer;transition:all .25s;background:' +
+    (i===0?'rgba(255,255,255,.8)':'rgba(255,255,255,.3)') + ';width:' + (i===0?'20px':'6px');
+  d.onclick = () => goTo(i);
+  dotsW.appendChild(d);
+});
+
+function goTo(n) {
+  cur = (n + total) % total;
+  track.style.transform = 'translateX(-' + (cur * 100) + '%)';
+  dotsW.querySelectorAll('button').forEach((d,i) => {
+    d.style.background = i===cur ? 'rgba(255,255,255,.8)' : 'rgba(255,255,255,.3)';
+    d.style.width      = i===cur ? '20px' : '6px';
+  });
+}
+setInterval(() => goTo(cur + 1), 7000);
+
+// ── Stats e ratings ─────────────────────────────────────────────────────
 fetch('/api/stats')
   .then(r => r.json())
-  .then(stats => {
-    // ── Carrossel de produtos ──────────────────────────────────────────
-    const slides = document.getElementById('pc-slides');
-    const dots   = document.getElementById('pc-dots');
-
-    produtosCarrossel.forEach((p, i) => {
-      const s = stats[p.id] || {};
-      const hasRating = s.reviews > 0 && s.avg_rating;
-      const avg = hasRating ? parseFloat(s.avg_rating) : 0;
-
-      const starsHtml = hasRating
-        ? `<div style="display:flex;align-items:center;gap:8px;margin-bottom:20px">
-             <span style="color:#F59E0B;letter-spacing:1px">${'★'.repeat(Math.round(avg))}${'☆'.repeat(5-Math.round(avg))}</span>
-             <span style="font-size:13px;color:var(--muted)">${s.avg_rating} · ${s.reviews} avaliação${s.reviews !== 1 ? 'ões' : ''}</span>
-           </div>`
-        : `<div style="margin-bottom:20px;font-size:13px;color:var(--muted)">Seja o primeiro a avaliar</div>`;
-
-      const slide = document.createElement('div');
-      slide.style.cssText = 'min-width:100%;display:flex;align-items:center;gap:48px;box-sizing:border-box';
-      slide.innerHTML = `
-        <div style="flex-shrink:0;display:flex;justify-content:center">
-          <svg width="148" height="208" viewBox="0 0 148 208" xmlns="http://www.w3.org/2000/svg"
-               style="border-radius:4px;box-shadow:0 8px 32px rgba(0,0,0,.18)">
-            <rect width="148" height="208" rx="3" fill="${p.bg}"/>
-            <rect x="0" y="0" width="11" height="208" rx="2" fill="${p.bgSpine}"/>
-            <text x="74" y="92" text-anchor="middle" font-size="40">${p.emoji}</text>
-            <text x="74" y="126" text-anchor="middle" font-family="Georgia,serif" font-size="13" font-weight="700" fill="#F1F5F9">${p.linha1}</text>
-            <text x="74" y="143" text-anchor="middle" font-family="Georgia,serif" font-size="13" font-weight="700" fill="#F1F5F9">${p.linha2}</text>
-          </svg>
-        </div>
-        <div style="flex:1;min-width:0">
-          <div style="font-size:11px;font-weight:600;color:var(--accent);text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px">${p.categoria}</div>
-          <h2 style="font-family:'Playfair Display',serif;font-size:24px;font-weight:700;line-height:1.25;margin-bottom:10px;color:var(--text)">${p.titulo}</h2>
-          <p style="font-size:15px;color:var(--muted);margin-bottom:18px;line-height:1.6;max-width:480px">${p.desc}</p>
-          ${starsHtml}
-          <a href="${p.url}"
-             style="display:inline-block;background:var(--accent);color:#fff;padding:11px 24px;border-radius:6px;font-size:14px;font-weight:600;text-decoration:none"
-             onmouseover="this.style.background='#1445B0'" onmouseout="this.style.background='var(--accent)'">
-            Ver produto →
-          </a>
-        </div>`;
-      slides.appendChild(slide);
-
-      const dot = document.createElement('button');
-      dot.style.cssText = 'height:8px;border-radius:4px;border:none;cursor:pointer;transition:all .25s;background:' + (i===0?'var(--accent)':'var(--border)') + ';width:' + (i===0?'20px':'8px');
-      dot.onclick = () => goTo(i);
-      dots.appendChild(dot);
-    });
-
-    let cur = 0;
-    function goTo(n) {
-      cur = n;
-      slides.style.transform = 'translateX(-' + (n * 100) + '%)';
-      dots.querySelectorAll('button').forEach((d, i) => {
-        d.style.background = i===n ? 'var(--accent)' : 'var(--border)';
-        d.style.width      = i===n ? '20px' : '8px';
-      });
+  .then(s => {
+    function ratingHtml(data) {
+      if (!data?.reviews || !data?.avg_rating) return '';
+      const a = parseFloat(data.avg_rating);
+      return '★'.repeat(Math.round(a)) + '<span style="color:#94A3B8;margin-left:4px">' +
+        data.avg_rating + ' · ' + data.reviews + ' avaliação' + (data.reviews!==1?'ões':'') + '</span>';
     }
-    setInterval(() => goTo((cur + 1) % produtosCarrossel.length), 5000);
+    const rf = document.getElementById('hr-financas');
+    const rc = document.getElementById('hr-cripto');
+    if (rf) rf.innerHTML = '<span style="color:#F59E0B">' + (ratingHtml(s.financas) || '<span style="color:#475569">Seja o primeiro a avaliar</span>') + '</span>';
+    if (rc) rc.innerHTML = '<span style="color:#F59E0B">' + (ratingHtml(s.cripto)   || '<span style="color:#475569">Seja o primeiro a avaliar</span>') + '</span>';
 
-    // ── Stats hero ────────────────────────────────────────────────────
-    const total = (stats.financas?.reviews||0) + (stats.cripto?.reviews||0);
+    const total = (s.financas?.reviews||0)+(s.cripto?.reviews||0);
     const aEl   = document.getElementById('stat-avaliacoes');
-    if (aEl && total > 0) aEl.textContent = '+' + total;
+    if (aEl && total > 0) aEl.textContent = '+'+total;
 
-    const avgs  = [stats.financas?.avg_rating, stats.cripto?.avg_rating].filter(Boolean).map(Number);
+    const avgs  = [s.financas?.avg_rating,s.cripto?.avg_rating].filter(Boolean).map(Number);
     const avgEl = document.getElementById('stat-avg');
-    if (avgEl && avgs.length) avgEl.textContent = (avgs.reduce((a,b)=>a+b,0)/avgs.length).toFixed(1) + ' ★';
+    if (avgEl && avgs.length) avgEl.textContent = (avgs.reduce((a,b)=>a+b,0)/avgs.length).toFixed(1)+' ★';
 
-    // ── Cards do catálogo — sem estrelas se não tiver avaliações ──────
     function updateCard(id, data) {
       const el = document.getElementById(id);
-      if (!el || !data) return;
-      if (!data.reviews || !data.avg_rating) {
-        el.innerHTML = '<span style="color:var(--muted);font-size:12px">Novo</span>';
-        return;
-      }
+      if (!el||!data) return;
+      if (!data.reviews||!data.avg_rating) { el.innerHTML='<span style="color:var(--muted);font-size:12px">Novo</span>'; return; }
       const a = parseFloat(data.avg_rating);
-      el.innerHTML = '<span class="s">' + '★'.repeat(Math.round(a)) + '☆'.repeat(5-Math.round(a)) + '</span> ' + data.avg_rating + ' · ' + data.reviews + ' avaliações';
+      el.innerHTML='<span class="s">'+'★'.repeat(Math.round(a))+'☆'.repeat(5-Math.round(a))+'</span> '+data.avg_rating+' · '+data.reviews+' avaliações';
     }
-    updateCard('stars-financas', stats.financas);
-    updateCard('stars-cripto',   stats.cripto);
-  })
-  .catch(() => {});
+    updateCard('stars-financas', s.financas);
+    updateCard('stars-cripto',   s.cripto);
+  }).catch(()=>{});
 
-  // ── Avaliações na seção ────────────────────────────────────────────
-  Promise.all(['financas','cripto'].map(p => fetch('/api/reviews?produto='+p).then(r=>r.json())))
-    .then(([rf, rc]) => {
-      const all  = [...(Array.isArray(rf)?rf:[]), ...(Array.isArray(rc)?rc:[])];
-      const grid = document.getElementById('home-reviews-grid');
-      const sec  = document.getElementById('avaliacoes-section');
-      if (!all.length) { if(sec) sec.style.display='none'; return; }
-      grid.innerHTML = all.map(r =>
-        '<div class="testimonial-card">' +
-        '<div class="stars-small">' + '★'.repeat(r.rating) + '☆'.repeat(5-r.rating) + '</div>' +
-        '<p>' + r.body + '</p>' +
-        '<div class="author">' + r.author + (r.city ? ' · '+r.city : '') + '</div>' +
-        '</div>'
-      ).join('');
-    })
-    .catch(() => { const s=document.getElementById('avaliacoes-section'); if(s) s.style.display='none'; });
+// ── Avaliações na seção ─────────────────────────────────────────────────
+Promise.all(['financas','cripto'].map(p=>fetch('/api/reviews?produto='+p).then(r=>r.json())))
+  .then(([rf,rc])=>{
+    const all  = [...(Array.isArray(rf)?rf:[]),...(Array.isArray(rc)?rc:[])];
+    const grid = document.getElementById('home-reviews-grid');
+    const sec  = document.getElementById('avaliacoes-section');
+    if (!all.length) { if(sec) sec.style.display='none'; return; }
+    grid.innerHTML = all.map(r=>
+      '<div class="testimonial-card">'+
+      '<div class="stars-small">'+'★'.repeat(r.rating)+'☆'.repeat(5-r.rating)+'</div>'+
+      '<p>'+r.body+'</p>'+
+      '<div class="author">'+r.author+(r.city?' · '+r.city:'')+'</div></div>'
+    ).join('');
+  }).catch(()=>{ const s=document.getElementById('avaliacoes-section'); if(s) s.style.display='none'; });
 </script>
 </body>
 </html>
