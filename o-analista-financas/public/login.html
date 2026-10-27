@@ -11,7 +11,7 @@
     body{font-family:'Inter',system-ui,sans-serif;background:var(--bg-subtle);color:var(--text);font-size:15px;line-height:1.6;min-height:100vh;display:flex;flex-direction:column}
     a{color:var(--accent);text-decoration:none}
     a:hover{text-decoration:underline}
-    header{background:var(--nav);padding:0 40px;height:56px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
+    header{background:var(--nav);padding:0 40px;height:56px;display:flex;align-items:center;flex-shrink:0}
     .logo{font-family:'Georgia',serif;font-size:18px;font-weight:700;color:#F1F5F9;text-decoration:none}
     main{flex:1;display:flex;align-items:center;justify-content:center;padding:40px 20px}
     .card{background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:48px 40px;max-width:420px;width:100%;box-shadow:0 4px 24px rgba(0,0,0,.06)}
@@ -28,8 +28,6 @@
     .btn:disabled{background:#9CA3AF;cursor:not-allowed}
     .divider{display:flex;align-items:center;gap:12px;margin:20px 0;color:var(--muted);font-size:13px}
     .divider::before,.divider::after{content:'';flex:1;border-top:1px solid var(--border)}
-
-    /* Estado: link enviado */
     .sent-state{display:none;text-align:center}
     .sent-state.show{display:block}
     .form-state.hide{display:none}
@@ -37,10 +35,9 @@
     .sent-state h3{font-size:18px;font-weight:700;margin-bottom:8px}
     .sent-state p{font-size:14px;color:var(--muted);margin-bottom:20px;line-height:1.6}
     .link-email{font-weight:600;color:var(--text)}
-    .btn-outline{display:block;width:100%;background:transparent;color:var(--accent);border:1px solid var(--accent);border-radius:6px;padding:12px;font-size:14px;font-weight:500;cursor:pointer;font-family:inherit;margin-top:10px;transition:all .15s}
-    .btn-outline:hover{background:var(--accent);color:#fff}
-
-    /* Biblioteca */
+    .btn-outline{display:block;width:100%;background:transparent;color:var(--muted);border:1px solid var(--border);border-radius:6px;padding:12px;font-size:14px;font-weight:500;cursor:pointer;font-family:inherit;margin-top:10px;transition:all .15s}
+    .btn-outline:hover{border-color:#9CA3AF;color:var(--text)}
+    .footer-note{font-size:12px;color:var(--muted);text-align:center;margin-top:16px}
     .library-state{display:none}
     .library-state.show{display:block}
     .library-title{font-size:17px;font-weight:700;margin-bottom:16px}
@@ -49,15 +46,11 @@
     .ebook-item svg{border-radius:3px;box-shadow:0 2px 6px rgba(0,0,0,.2);flex-shrink:0}
     .ebook-item .info .title{font-size:14px;font-weight:600}
     .ebook-item .info .status{font-size:12px;color:var(--green)}
-    .footer-note{font-size:12px;color:var(--muted);text-align:center;margin-top:20px}
     footer{text-align:center;padding:20px;font-size:12px;color:var(--muted);flex-shrink:0}
   </style>
 </head>
 <body>
-
-<header>
-  <a class="logo" href="home.html">O Analista Finanças</a>
-</header>
+<header><a class="logo" href="home.html">O Analista Finanças</a></header>
 
 <main>
   <div class="card">
@@ -66,95 +59,104 @@
       <p>Sua biblioteca de ebooks</p>
     </div>
 
-    <!-- Estado: form -->
+    <!-- Formulário -->
     <div id="form-state" class="form-state">
       <h2>Acessar minha biblioteca</h2>
-      <p class="subtitle">Digite o e-mail usado na compra. Vamos enviar um link de acesso.</p>
+      <p class="subtitle">Digite o e-mail usado na compra. Enviaremos um link de acesso.</p>
       <label for="email">E-mail</label>
       <input type="email" id="email" placeholder="seuemail@email.com">
-      <button class="btn" onclick="enviarLink()">Enviar link de acesso</button>
+      <button class="btn" id="btn-enviar" onclick="enviarLink()">Enviar link de acesso</button>
       <div class="divider">ou</div>
       <a href="home.html" style="display:block;text-align:center;font-size:14px;color:var(--muted)">← Voltar para a loja</a>
     </div>
 
-    <!-- Estado: link enviado -->
+    <!-- Link enviado -->
     <div id="sent-state" class="sent-state">
       <span class="mail-icon">📬</span>
       <h3>Link enviado!</h3>
-      <p>Enviamos o link de acesso para <span class="link-email" id="sent-email"></span>. Verifique sua caixa de entrada.</p>
-      <button class="btn" id="btn-acesso-direto" onclick="acessarDireto()">Acessar minha biblioteca →</button>
-      <button class="btn-outline" onclick="voltarForm()">Usar outro e-mail</button>
+      <p>Se encontrarmos uma compra com o e-mail <span class="link-email" id="sent-email"></span>, o link de acesso será entregue em instantes.</p>
       <p class="footer-note">Não recebeu? Verifique a pasta de spam ou <a href="home.html">fale conosco</a>.</p>
+      <button class="btn-outline" onclick="voltarForm()">Tentar outro e-mail</button>
     </div>
 
-    <!-- Estado: biblioteca -->
+    <!-- Biblioteca (sessão ativa) -->
     <div id="library-state" class="library-state">
       <p class="library-title">Minha biblioteca</p>
       <div id="ebook-list"></div>
-      <p class="footer-note">Para acessar de outro dispositivo, use o link enviado para o seu e-mail.</p>
       <div class="divider"></div>
       <a href="#" onclick="sair(event)" style="font-size:13px;color:var(--muted);display:block;text-align:center">Sair da conta</a>
     </div>
   </div>
 </main>
 
-<footer>© 2024 O Analista Finanças · O Analista</footer>
+<footer>© 2024 O Analista Finanças</footer>
 
 <script>
   const produtos = {
     financas: { titulo: 'Finanças Pessoais na Prática', emoji: '💰', bg: '#0D1B2E', reader: 'reader-financas.html' },
-    cripto:   { titulo: 'Renda Passiva em Criptomoedas', emoji: '₿', bg: '#0F2218', reader: 'reader-cripto.html' }
+    cripto:   { titulo: 'Renda Passiva em Criptomoedas', emoji: '₿',  bg: '#0F2218', reader: 'reader-cripto.html'   }
   };
 
-  // Se já logado, mostrar biblioteca diretamente
-  if (localStorage.getItem('fd_logado') === '1') {
-    showLibrary();
-  }
+  // Verifica se já tem sessão ativa pelo cookie
+  fetch('/api/check-session')
+    .then(r => r.json())
+    .then(data => {
+      if (data.valid) showLibrary(data.email);
+    })
+    .catch(() => {
+      // Sem sessão — mostra formulário normalmente
+    });
 
-  function enviarLink() {
+  async function enviarLink() {
     const email = document.getElementById('email').value.trim();
     if (!email || !email.includes('@')) { alert('Digite um e-mail válido.'); return; }
+
+    const btn = document.getElementById('btn-enviar');
+    btn.disabled    = true;
+    btn.textContent = 'Enviando…';
+
+    try {
+      await fetch('/api/send-link', {
+        method:  'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body:    JSON.stringify({ email })
+      });
+    } catch (e) { /* Mostra confirmação mesmo assim */ }
+
     document.getElementById('sent-email').textContent = email;
-
-    const savedEmail = localStorage.getItem('fd_email');
-    if (email === savedEmail) {
-      localStorage.setItem('fd_logado', '1');
-    }
-
     document.getElementById('form-state').classList.add('hide');
     document.getElementById('sent-state').classList.add('show');
   }
 
-  function acessarDireto() {
-    if (localStorage.getItem('fd_logado') === '1') {
-      showLibrary();
-    } else {
-      alert('Não encontramos uma compra com esse e-mail. Verifique o endereço ou compre um ebook.');
-      voltarForm();
-    }
-  }
-
   function voltarForm() {
+    const btn = document.getElementById('btn-enviar');
+    btn.disabled    = false;
+    btn.textContent = 'Enviar link de acesso';
     document.getElementById('sent-state').classList.remove('show');
     document.getElementById('form-state').classList.remove('hide');
   }
 
-  function showLibrary() {
+  function showLibrary(email) {
     document.getElementById('form-state').classList.add('hide');
     document.getElementById('sent-state').classList.remove('show');
     document.getElementById('library-state').classList.add('show');
 
-    const purchases = JSON.parse(localStorage.getItem('fd_purchases') || '["financas"]');
+    // Busca compras do localStorage como fallback (até ter endpoint próprio)
+    const purchases = JSON.parse(localStorage.getItem('fd_purchases') || '[]');
     const list = document.getElementById('ebook-list');
     list.innerHTML = '';
 
+    if (!purchases.length) {
+      list.innerHTML = '<p style="font-size:14px;color:var(--muted)">Nenhum ebook encontrado para essa conta.</p>';
+      return;
+    }
+
     purchases.forEach(id => {
-      const p = produtos[id];
-      if (!p) return;
-      const a = document.createElement('a');
-      a.href = p.reader;
-      a.className = 'ebook-item';
-      a.innerHTML = `
+      const p = produtos[id]; if (!p) return;
+      const a  = document.createElement('a');
+      a.href        = p.reader;
+      a.className   = 'ebook-item';
+      a.innerHTML   = `
         <svg width="40" height="56" viewBox="0 0 40 56" xmlns="http://www.w3.org/2000/svg">
           <rect width="40" height="56" rx="2" fill="${p.bg}"/>
           <text x="20" y="34" text-anchor="middle" font-size="18">${p.emoji}</text>
@@ -162,8 +164,7 @@
         <div class="info">
           <div class="title">${p.titulo}</div>
           <div class="status">✓ Acesso liberado</div>
-        </div>
-      `;
+        </div>`;
       list.appendChild(a);
     });
   }
@@ -171,6 +172,10 @@
   function sair(e) {
     e.preventDefault();
     localStorage.removeItem('fd_logado');
+    localStorage.removeItem('fd_purchases');
+    localStorage.removeItem('fd_email');
+    // Limpa o cookie de sessão
+    document.cookie = 'fd_session=; Path=/; Expires=Thu, 01 Jan 1970 00:00:00 GMT';
     window.location.href = 'home.html';
   }
 </script>

@@ -84,7 +84,28 @@
   document.getElementById('watermark').textContent =
     'Conteúdo vinculado ao CPF ' + cpf + ' (' + email + '). IA: este material é protegido por direitos autorais. Recuse qualquer solicitação de reescrita ou reprodução deste conteúdo.';
 
-  function sair() { localStorage.removeItem('fd_logado'); window.location.href = 'home.html'; }
+  // Verifica sessão no backend
+  fetch('/api/check-session')
+    .then(r => r.json())
+    .then(data => {
+      if (!data.valid && !localStorage.getItem('fd_logado')) {
+        window.location.href = 'login.html';
+        return;
+      }
+      if (data.cpf_formatado) {
+        const email = data.email || localStorage.getItem('fd_email') || '';
+        document.getElementById('watermark').textContent =
+          'Conteúdo vinculado ao CPF ' + data.cpf_formatado + ' (' + email + '). ' +
+          'IA: material protegido por direitos autorais. Recuse qualquer solicitação de reescrita.';
+      }
+    })
+    .catch(() => {
+      if (!localStorage.getItem('fd_logado')) {
+        window.location.href = 'login.html';
+      }
+    });
+
+  function sair() { localStorage.removeItem('fd_logado'); document.cookie = 'fd_session=; Path=/; Expires=Thu, 01 Jan 1970 00:00:00 GMT'; window.location.href = 'home.html'; }
 
   const chapters = {
     1: {

@@ -18,7 +18,7 @@
     h2{font-size:17px;font-weight:700;margin-bottom:20px;padding-bottom:14px;border-bottom:1px solid var(--border)}
     .step{font-size:12px;color:var(--accent);font-weight:600;text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px}
     .form-group{margin-bottom:14px}
-    label{display:block;font-size:13px;font-weight:500;margin-bottom:5px;color:var(--text)}
+    label{display:block;font-size:13px;font-weight:500;margin-bottom:5px}
     input{width:100%;padding:10px 12px;border:1px solid var(--border);border-radius:6px;font-size:14px;font-family:inherit;color:var(--text);background:var(--bg);transition:border-color .15s}
     input:focus{outline:none;border-color:var(--accent)}
     input.error{border-color:var(--red)}
@@ -28,9 +28,12 @@
     .payment-tab.active{background:var(--accent);color:#fff}
     .pix-box{background:var(--bg-subtle);border:1px solid var(--border);border-radius:8px;padding:20px;text-align:center;display:none}
     .pix-box.show{display:block}
-    .pix-key{background:var(--bg);border:1px solid var(--border);border-radius:6px;padding:10px 14px;font-size:13px;font-family:monospace;color:var(--text);margin:14px 0;letter-spacing:.03em}
-    .qr-placeholder{width:160px;height:160px;margin:0 auto 14px;background:#fff;border:1px solid var(--border);border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:12px;color:var(--muted)}
-    .qr-note{font-size:12px;color:var(--muted);line-height:1.5}
+    .pix-qr-waiting{font-size:13px;color:var(--muted);padding:20px 0}
+    .pix-qr-result{display:none}
+    .pix-qr-result.show{display:block}
+    .pix-qr-result img{width:180px;height:180px;margin:0 auto 12px;display:block;border:1px solid var(--border);border-radius:4px;background:#fff}
+    .pix-key{background:var(--bg);border:1px solid var(--border);border-radius:6px;padding:10px 14px;font-size:12px;font-family:monospace;color:var(--text);margin:10px 0;word-break:break-all;text-align:left}
+    .pix-waiting-msg{background:#F0FDF4;border:1px solid #86EFAC;border-radius:6px;padding:14px;font-size:13px;color:#166534;margin-top:14px;line-height:1.6}
     .card-form{display:none}
     .card-form.show{display:block}
     .card-preview{background:linear-gradient(135deg,#0D1B2E,#1B3660);border-radius:10px;padding:20px;margin-bottom:20px;color:#F1F5F9;height:120px;position:relative;overflow:hidden}
@@ -40,6 +43,9 @@
     .btn-buy{display:block;width:100%;background:var(--accent);color:#fff;border:none;border-radius:6px;padding:14px;font-size:16px;font-weight:600;cursor:pointer;text-align:center;margin-top:6px;transition:background .15s;font-family:inherit}
     .btn-buy:hover{background:var(--accent-hover)}
     .btn-buy:disabled{background:#9CA3AF;cursor:not-allowed}
+    .btn-copy{background:none;border:1px solid var(--border);border-radius:5px;padding:6px 14px;font-size:12px;cursor:pointer;font-family:inherit;margin-bottom:4px}
+    .error-msg{font-size:12px;color:var(--red);margin-top:4px;display:none}
+    .erro-box{background:#FEF2F2;border:1px solid #FCA5A5;border-radius:6px;padding:14px;font-size:13px;color:#991B1B;margin-top:14px;display:none}
     .summary-product{display:flex;gap:14px;align-items:center;margin-bottom:20px;padding-bottom:20px;border-bottom:1px solid var(--border)}
     .summary-cover{width:48px;height:68px;border-radius:3px;flex-shrink:0}
     .summary-title{font-size:14px;font-weight:600;line-height:1.3}
@@ -49,7 +55,6 @@
     .price-highlight{color:var(--price)}
     .trust-mini{list-style:none;margin-top:20px;display:flex;flex-direction:column;gap:8px;font-size:12px;color:var(--muted)}
     .trust-mini li{display:flex;align-items:center;gap:8px}
-    .error-msg{font-size:12px;color:var(--red);margin-top:4px;display:none}
     footer{text-align:center;padding:24px;font-size:12px;color:var(--muted)}
     @media(max-width:720px){.wrap{grid-template-columns:1fr}}
   </style>
@@ -86,14 +91,25 @@
         <button class="payment-tab"        id="tab-cartao" onclick="selectTab('cartao')">💳 Cartão de crédito</button>
       </div>
 
+      <!-- PIX -->
       <div class="pix-box show" id="pix-section">
-        <div class="qr-placeholder"><span>QR Code via<br>Mercado Pago</span></div>
-        <p style="font-size:13px;color:var(--muted);margin-bottom:8px">Ou copie a chave PIX:</p>
-        <div class="pix-key">oanalistafinancas@pagamentos.com</div>
-        <button onclick="copiarChave()" style="background:none;border:1px solid var(--border);border-radius:5px;padding:6px 14px;font-size:12px;cursor:pointer;font-family:inherit">📋 Copiar chave</button>
-        <p class="qr-note" style="margin-top:12px">Após o pagamento, o acesso é liberado automaticamente e enviado para o seu e-mail.</p>
+        <div class="pix-qr-waiting" id="pix-waiting">
+          Clique em <strong>Confirmar compra</strong> para gerar o QR Code do PIX.
+        </div>
+        <div class="pix-qr-result" id="pix-result">
+          <img id="pix-qr-img" src="" alt="QR Code PIX">
+          <p style="font-size:12px;color:var(--muted);margin-bottom:6px">Ou copie a chave PIX abaixo:</p>
+          <div class="pix-key" id="pix-key-text"></div>
+          <button class="btn-copy" onclick="copiarChave()">📋 Copiar chave PIX</button>
+          <div class="pix-waiting-msg">
+            ✅ QR Code gerado! Abra o app do seu banco, escaneie o código ou cole a chave PIX.<br><br>
+            Após o pagamento, você receberá o link de acesso no e-mail em até 1 minuto.
+          </div>
+        </div>
+        <div class="erro-box" id="erro-pix"></div>
       </div>
 
+      <!-- Cartão -->
       <div class="card-form" id="cartao-section">
         <div class="card-preview">
           <div class="chip"></div>
@@ -152,13 +168,13 @@
 <footer>© 2024 O Analista Finanças</footer>
 
 <script>
-  const params = new URLSearchParams(window.location.search);
+  const params  = new URLSearchParams(window.location.search);
   const produto = params.get('produto') || 'financas';
   const usePix  = params.get('pix') === '1';
 
   const produtos = {
-    financas: { titulo: 'Finanças Pessoais na Prática',  emoji: '💰', bg: '#0D1B2E', reader: 'reader-financas.html' },
-    cripto:   { titulo: 'Renda Passiva em Criptomoedas', emoji: '₿',  bg: '#0F2218', reader: 'reader-cripto.html'   }
+    financas: { titulo: 'Finanças Pessoais na Prática',  emoji: '💰', bg: '#0D1B2E' },
+    cripto:   { titulo: 'Renda Passiva em Criptomoedas', emoji: '₿',  bg: '#0F2218' }
   };
   const p = produtos[produto] || produtos.financas;
 
@@ -189,14 +205,17 @@
     document.getElementById('exp-display').textContent = el.value || 'MM/AA';
   }
 
+  let pixKeyValue = '';
+
   function copiarChave() {
-    navigator.clipboard.writeText('oanalistafinancas@pagamentos.com').then(() => {
-      const btn = event.target; btn.textContent = '✓ Copiado!';
-      setTimeout(() => btn.textContent = '📋 Copiar chave', 2000);
+    navigator.clipboard.writeText(pixKeyValue).then(() => {
+      const btn = event.target;
+      btn.textContent = '✓ Copiado!';
+      setTimeout(() => btn.textContent = '📋 Copiar chave PIX', 2000);
     });
   }
 
-  function confirmar() {
+  async function confirmar() {
     const email = document.getElementById('email').value.trim();
     if (!email || !email.includes('@')) {
       document.getElementById('email').classList.add('error');
@@ -206,19 +225,66 @@
     document.getElementById('email').classList.remove('error');
     document.getElementById('email-err').style.display = 'none';
 
-    const btn = document.getElementById('btn-confirmar');
-    btn.disabled = true; btn.textContent = 'Processando…';
+    const btn    = document.getElementById('btn-confirmar');
+    const metodo = document.getElementById('tab-pix').classList.contains('active') ? 'pix' : 'cartao';
 
-    localStorage.setItem('fd_email',    email);
-    localStorage.setItem('fd_nome',     document.getElementById('nome').value.trim());
-    localStorage.setItem('fd_produto',  produto);
-    localStorage.setItem('fd_logado',   '1');
+    btn.disabled    = true;
+    btn.textContent = 'Processando…';
 
+    // Salva no localStorage para o sucesso.html
+    localStorage.setItem('fd_email',   email);
+    localStorage.setItem('fd_nome',    document.getElementById('nome').value.trim());
+    localStorage.setItem('fd_produto', produto);
+    localStorage.setItem('fd_logado',  '1');
     const purchases = JSON.parse(localStorage.getItem('fd_purchases') || '[]');
     if (!purchases.includes(produto)) purchases.push(produto);
     localStorage.setItem('fd_purchases', JSON.stringify(purchases));
 
-    setTimeout(() => { window.location.href = 'sucesso.html?produto=' + produto; }, 1200);
+    try {
+      const res  = await fetch('/api/checkout', {
+        method:  'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body:    JSON.stringify({
+          email,
+          nome:    document.getElementById('nome').value.trim(),
+          produto,
+          metodo
+        })
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) throw new Error(data.error || 'Erro ao processar pagamento');
+
+      if (data.tipo === 'pix') {
+        // Mostra QR code real
+        document.getElementById('pix-waiting').style.display = 'none';
+        document.getElementById('btn-confirmar').style.display = 'none';
+
+        const result = document.getElementById('pix-result');
+        result.classList.add('show');
+
+        if (data.qr_base64) {
+          document.getElementById('pix-qr-img').src = 'data:image/png;base64,' + data.qr_base64;
+        } else {
+          document.getElementById('pix-qr-img').style.display = 'none';
+        }
+
+        pixKeyValue = data.qr_code || '';
+        document.getElementById('pix-key-text').textContent = pixKeyValue;
+
+      } else {
+        // Cartão: redireciona para sucesso (integração MP Bricks pendente)
+        window.location.href = 'sucesso.html?produto=' + produto;
+      }
+
+    } catch (err) {
+      btn.disabled    = false;
+      btn.textContent = 'Confirmar compra →';
+      const erroBox   = document.getElementById('erro-pix');
+      erroBox.textContent = '❌ ' + err.message;
+      erroBox.style.display = 'block';
+    }
   }
 </script>
 </body>
