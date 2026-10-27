@@ -45,7 +45,8 @@ CREATE TABLE IF NOT EXISTS sessions (
   token      TEXT        UNIQUE NOT NULL,
   email      TEXT        NOT NULL,
   expires_at TIMESTAMPTZ NOT NULL,
-  created_at TIMESTAMPTZ DEFAULT NOW()
+  recovery_sent_at TIMESTAMPTZ,
+  created_at        TIMESTAMPTZ DEFAULT NOW()
 );
 
 -- ── Índices ───────────────────────────────────────────────
@@ -61,3 +62,6 @@ BEGIN
   DELETE FROM sessions    WHERE expires_at < NOW() - INTERVAL '1 day';
 END;
 $$ LANGUAGE plpgsql;
+
+-- ── Atualização (rode se o banco já existia) ─────────────────────────────
+ALTER TABLE purchases ADD COLUMN IF NOT EXISTS recovery_sent_at TIMESTAMPTZ;
