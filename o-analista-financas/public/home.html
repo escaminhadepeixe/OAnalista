@@ -148,14 +148,6 @@
 </section>
 
 
-<!-- ── CARROSSEL DE AVALIAÇÕES ── -->
-<section id="carousel-section" style="background:var(--nav);padding:28px 40px;display:none">
-  <div style="max-width:1080px;margin:0 auto;position:relative;overflow:hidden">
-    <p style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:#475569;margin-bottom:16px">O que estão dizendo</p>
-    <div id="carousel-track" style="display:flex;transition:transform .5s ease;will-change:transform"></div>
-    <div style="display:flex;gap:6px;margin-top:16px" id="carousel-dots"></div>
-  </div>
-</section>
 <section class="catalog" id="catalogo">
   <div class="catalog-header">
     <h2>Nossos ebooks</h2>
@@ -256,12 +248,12 @@
   fetch('/api/stats')
     .then(r => r.json())
     .then(s => {
-      const totalAvaliacoes = (s.financas?.reviews || 0) + (s.cripto?.reviews || 0);
+      const total = (s.financas?.reviews || 0) + (s.cripto?.reviews || 0);
       const aEl = document.getElementById('stat-avaliacoes');
-      if (aEl) aEl.textContent = '+' + totalAvaliacoes;
+      if (aEl && total > 0) aEl.textContent = '+' + total;
 
       const avgEl = document.getElementById('stat-avg');
-      const avgs = [s.financas?.avg_rating, s.cripto?.avg_rating].filter(Boolean).map(Number);
+      const avgs  = [s.financas?.avg_rating, s.cripto?.avg_rating].filter(Boolean).map(Number);
       if (avgEl && avgs.length) avgEl.textContent = (avgs.reduce((a,b)=>a+b,0)/avgs.length).toFixed(1) + ' ★';
 
       function updateCard(id, data) {
@@ -276,41 +268,22 @@
     })
     .catch(() => {});
 
-  // Carrossel de avaliações
-  const produtos = ['financas','cripto'];
-  Promise.all(produtos.map(p => fetch('/api/reviews?produto=' + p).then(r => r.json())))
+  // Avaliações na seção
+  Promise.all(['financas','cripto'].map(p => fetch('/api/reviews?produto='+p).then(r=>r.json())))
     .then(([rf, rc]) => {
-      const all = [...(Array.isArray(rf) ? rf : []), ...(Array.isArray(rc) ? rc : [])];
-      if (!all.length) return;
-      const section = document.getElementById('carousel-section');
-      const track   = document.getElementById('carousel-track');
-      const dots    = document.getElementById('carousel-dots');
-      section.style.display = 'block';
+      const all = [...(Array.isArray(rf)?rf:[]), ...(Array.isArray(rc)?rc:[])];
+      const grid = document.getElementById('home-reviews-grid');
+      const sec  = document.getElementById('avaliacoes-section');
+      if (!all.length) { if(sec) sec.style.display='none'; return; }
 
-      all.forEach((r, i) => {
-        const card = document.createElement('div');
-        card.style.cssText = 'min-width:100%;padding:0 8px;box-sizing:border-box';
-        card.innerHTML = '<div style="background:rgba(255,255,255,.06);border-radius:8px;padding:18px 20px;max-width:640px">' +
-          '<div style="color:#F59E0B;font-size:14px;margin-bottom:8px">' + '★'.repeat(r.rating) + '</div>' +
-          '<p style="color:#CBD5E1;font-size:15px;line-height:1.6;margin-bottom:10px">' + r.body + '</p>' +
-          '<span style="color:#64748B;font-size:13px">' + r.author + (r.city ? ' · ' + r.city : '') + '</span></div>';
-        track.appendChild(card);
-
-        const dot = document.createElement('button');
-        dot.style.cssText = 'width:6px;height:6px;border-radius:50%;border:none;cursor:pointer;background:' + (i===0?'#94A3B8':'#334155');
-        dot.onclick = () => goTo(i);
-        dots.appendChild(dot);
-      });
-
-      let current = 0;
-      function goTo(n) {
-        current = n;
-        track.style.transform = 'translateX(-' + (n * 100) + '%)';
-        dots.querySelectorAll('button').forEach((d,i) => d.style.background = i===n ? '#94A3B8' : '#334155');
-      }
-      setInterval(() => goTo((current + 1) % all.length), 4000);
+      grid.innerHTML = all.map(r => `
+        <div class="testimonial-card">
+          <div class="stars-small">${'★'.repeat(r.rating)}${'☆'.repeat(5-r.rating)}</div>
+          <p>${r.body}</p>
+          <div class="author">${r.author}${r.city ? ' · '+r.city : ''}</div>
+        </div>`).join('');
     })
-    .catch(() => {});
+    .catch(() => { const s=document.getElementById('avaliacoes-section'); if(s) s.style.display='none'; });
 </script>
 </body>
 </html>
