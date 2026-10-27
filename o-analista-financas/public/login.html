@@ -109,7 +109,7 @@
   fetch('/api/check-session')
     .then(r => r.json())
     .then(data => {
-      if (data.valid) showLibrary(data.email);
+      if (data.valid) showLibrary(data.produtos || []);
     })
     .catch(() => {
       // Sem sessão — mostra formulário normalmente
@@ -144,27 +144,23 @@
     document.getElementById('form-state').classList.remove('hide');
   }
 
-  function showLibrary(email) {
+  function showLibrary(purchases) {
     document.getElementById('form-state').classList.add('hide');
     document.getElementById('sent-state').classList.remove('show');
     document.getElementById('library-state').classList.add('show');
 
-    // Busca compras do localStorage como fallback (até ter endpoint próprio)
-    const purchases = JSON.parse(localStorage.getItem('fd_purchases') || '[]');
     const list = document.getElementById('ebook-list');
     list.innerHTML = '';
-
     if (!purchases.length) {
       list.innerHTML = '<p style="font-size:14px;color:var(--muted)">Nenhum ebook encontrado para essa conta.</p>';
       return;
     }
-
     purchases.forEach(id => {
       const p = produtos[id]; if (!p) return;
-      const a  = document.createElement('a');
-      a.href        = p.reader;
-      a.className   = 'ebook-item';
-      a.innerHTML   = `
+      const a = document.createElement('a');
+      a.href = p.reader;
+      a.className = 'ebook-item';
+      a.innerHTML = `
         <svg width="40" height="56" viewBox="0 0 40 56" xmlns="http://www.w3.org/2000/svg">
           <rect width="40" height="56" rx="2" fill="${p.bg}"/>
           <text x="20" y="34" text-anchor="middle" font-size="18">${p.emoji}</text>
@@ -179,12 +175,7 @@
 
   function sair(e) {
     e.preventDefault();
-    localStorage.removeItem('fd_logado');
-    localStorage.removeItem('fd_purchases');
-    localStorage.removeItem('fd_email');
-    // Limpa o cookie de sessão
-    document.cookie = 'fd_session=; Path=/; Expires=Thu, 01 Jan 1970 00:00:00 GMT';
-    window.location.href = 'home.html';
+    fetch('/api/logout', { method: 'POST' }).finally(() => window.location.href = 'home.html');
   }
 </script>
 </body>

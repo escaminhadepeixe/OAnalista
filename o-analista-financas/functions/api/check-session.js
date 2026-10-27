@@ -1,38 +1,21 @@
-// GET /api/check-session
-// Verifica se o cookie de sessão é válido e retorna dados do usuário
-import { getDb } from '../_shared/db.js';
+// GET /api/check-session — diz se há sessão válida e quais ebooks o usuário comprou
+import { getDb }           from '../_shared/db.js';
+import { getSessionEmail } from '../_shared/session.js';
 
-export async function onRequestGet(context) {
-  const { request, env } = context;
-  const cookie       = request.headers.get('Cookie') || '';
-  const sessionToken = cookie.split(';')
-    .find(c => c.trim().startsWith('fd_session='))
-    ?.split('=')[1]?.trim();
+export async function onRequestGet({ request, env }) {
+  const db    = getDb(env);
+  const email = await getSessionEmail(db, request);
+  if (!email) return json({ valid: false });
 
-  if (!sessionToken) return json({ valid: false });
+  const { data: compras } = await db.from('purchases')
+    .select('product_id').eq('user_email', email).eq('status', 'approved');
 
-  const db = getDb(env);
-
-  const { data: session } = await db
-    .from('sessions').select('email, expires_at')
-    .eq('token', sessionToken).maybeSingle();
-
-  if (!session || new Date(session.expires_at) < new Date())
-    return json({ valid: false });
-
-  const { data: user } = await db
-    .from('users').select('cpf').eq('email', session.email).maybeSingle();
-
-  const cpf = user?.cpf;
-  const cpfFormatado = cpf
-    ? cpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4')
-    : null;
-
-  return json({ valid: true, email: session.email, cpf_formatado: cpfFormatado });
+  const produtos = [...new Set((compras || []).map(c => c.product_id))];
+  return json({ valid: true, email, produtos });
 }
 
 function json(data) {
   return new Response(JSON.stringify(data), {
-    headers: { 'Content-Type': 'application/json' }
+    headers: { 'Content-Type': 'application/json', 'Cache-Control': 'no-store' }
   });
 }
