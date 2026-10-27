@@ -148,6 +148,16 @@
 </section>
 
 
+
+<!-- ── CARROSSEL DE PRODUTOS ── -->
+<section style="background:var(--bg);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:44px 40px">
+  <div style="max-width:1080px;margin:0 auto">
+    <div style="overflow:hidden">
+      <div id="pc-slides" style="display:flex;transition:transform .5s cubic-bezier(.4,0,.2,1)"></div>
+    </div>
+    <div id="pc-dots" style="display:flex;justify-content:center;gap:8px;margin-top:22px"></div>
+  </div>
+</section>
 <section class="catalog" id="catalogo">
   <div class="catalog-header">
     <h2>Nossos ebooks</h2>
@@ -243,45 +253,128 @@
   </div>
 </footer>
 
+
 <script>
-  // Stats
-  fetch('/api/stats')
-    .then(r => r.json())
-    .then(s => {
-      const total = (s.financas?.reviews || 0) + (s.cripto?.reviews || 0);
-      const aEl = document.getElementById('stat-avaliacoes');
-      if (aEl && total > 0) aEl.textContent = '+' + total;
+const produtosCarrossel = [
+  {
+    id: 'financas',
+    titulo: 'Finanças Pessoais na Prática',
+    linha1: 'Finanças Pessoais', linha2: 'na Prática',
+    categoria: 'Finanças pessoais',
+    desc: 'Do controle do dinheiro ao portfólio com ações, FIIs, cripto e ativos internacionais.',
+    emoji: '💰', bg: '#0D1B2E', bgSpine: '#1B3660', url: 'financas.html'
+  },
+  {
+    id: 'cripto',
+    titulo: 'Renda Passiva em Criptomoedas',
+    linha1: 'Renda Passiva', linha2: 'em Criptomoedas',
+    categoria: 'Criptomoedas',
+    desc: 'Como acumular frações de Bitcoin e outros criptoativos sem gastar nada do seu bolso.',
+    emoji: '₿', bg: '#0F2218', bgSpine: '#153320', url: 'cripto.html'
+  }
+];
 
-      const avgEl = document.getElementById('stat-avg');
-      const avgs  = [s.financas?.avg_rating, s.cripto?.avg_rating].filter(Boolean).map(Number);
-      if (avgEl && avgs.length) avgEl.textContent = (avgs.reduce((a,b)=>a+b,0)/avgs.length).toFixed(1) + ' ★';
+fetch('/api/stats')
+  .then(r => r.json())
+  .then(stats => {
+    // ── Carrossel de produtos ──────────────────────────────────────────
+    const slides = document.getElementById('pc-slides');
+    const dots   = document.getElementById('pc-dots');
 
-      function updateCard(id, data) {
-        const el = document.getElementById(id);
-        if (!el || !data) return;
-        const avg = data.avg_rating || '5.0';
-        const n   = data.reviews || 0;
-        el.innerHTML = '<span class="s">' + '★'.repeat(Math.round(avg)) + '☆'.repeat(5-Math.round(avg)) + '</span> ' + avg + (n > 0 ? ' · ' + n + ' avaliações' : '');
+    produtosCarrossel.forEach((p, i) => {
+      const s = stats[p.id] || {};
+      const hasRating = s.reviews > 0 && s.avg_rating;
+      const avg = hasRating ? parseFloat(s.avg_rating) : 0;
+
+      const starsHtml = hasRating
+        ? `<div style="display:flex;align-items:center;gap:8px;margin-bottom:20px">
+             <span style="color:#F59E0B;letter-spacing:1px">${'★'.repeat(Math.round(avg))}${'☆'.repeat(5-Math.round(avg))}</span>
+             <span style="font-size:13px;color:var(--muted)">${s.avg_rating} · ${s.reviews} avaliação${s.reviews !== 1 ? 'ões' : ''}</span>
+           </div>`
+        : `<div style="margin-bottom:20px;font-size:13px;color:var(--muted)">Seja o primeiro a avaliar</div>`;
+
+      const slide = document.createElement('div');
+      slide.style.cssText = 'min-width:100%;display:flex;align-items:center;gap:48px;box-sizing:border-box';
+      slide.innerHTML = `
+        <div style="flex-shrink:0;display:flex;justify-content:center">
+          <svg width="148" height="208" viewBox="0 0 148 208" xmlns="http://www.w3.org/2000/svg"
+               style="border-radius:4px;box-shadow:0 8px 32px rgba(0,0,0,.18)">
+            <rect width="148" height="208" rx="3" fill="${p.bg}"/>
+            <rect x="0" y="0" width="11" height="208" rx="2" fill="${p.bgSpine}"/>
+            <text x="74" y="92" text-anchor="middle" font-size="40">${p.emoji}</text>
+            <text x="74" y="126" text-anchor="middle" font-family="Georgia,serif" font-size="13" font-weight="700" fill="#F1F5F9">${p.linha1}</text>
+            <text x="74" y="143" text-anchor="middle" font-family="Georgia,serif" font-size="13" font-weight="700" fill="#F1F5F9">${p.linha2}</text>
+          </svg>
+        </div>
+        <div style="flex:1;min-width:0">
+          <div style="font-size:11px;font-weight:600;color:var(--accent);text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px">${p.categoria}</div>
+          <h2 style="font-family:'Playfair Display',serif;font-size:24px;font-weight:700;line-height:1.25;margin-bottom:10px;color:var(--text)">${p.titulo}</h2>
+          <p style="font-size:15px;color:var(--muted);margin-bottom:18px;line-height:1.6;max-width:480px">${p.desc}</p>
+          ${starsHtml}
+          <a href="${p.url}"
+             style="display:inline-block;background:var(--accent);color:#fff;padding:11px 24px;border-radius:6px;font-size:14px;font-weight:600;text-decoration:none"
+             onmouseover="this.style.background='#1445B0'" onmouseout="this.style.background='var(--accent)'">
+            Ver produto →
+          </a>
+        </div>`;
+      slides.appendChild(slide);
+
+      const dot = document.createElement('button');
+      dot.style.cssText = 'height:8px;border-radius:4px;border:none;cursor:pointer;transition:all .25s;background:' + (i===0?'var(--accent)':'var(--border)') + ';width:' + (i===0?'20px':'8px');
+      dot.onclick = () => goTo(i);
+      dots.appendChild(dot);
+    });
+
+    let cur = 0;
+    function goTo(n) {
+      cur = n;
+      slides.style.transform = 'translateX(-' + (n * 100) + '%)';
+      dots.querySelectorAll('button').forEach((d, i) => {
+        d.style.background = i===n ? 'var(--accent)' : 'var(--border)';
+        d.style.width      = i===n ? '20px' : '8px';
+      });
+    }
+    setInterval(() => goTo((cur + 1) % produtosCarrossel.length), 5000);
+
+    // ── Stats hero ────────────────────────────────────────────────────
+    const total = (stats.financas?.reviews||0) + (stats.cripto?.reviews||0);
+    const aEl   = document.getElementById('stat-avaliacoes');
+    if (aEl && total > 0) aEl.textContent = '+' + total;
+
+    const avgs  = [stats.financas?.avg_rating, stats.cripto?.avg_rating].filter(Boolean).map(Number);
+    const avgEl = document.getElementById('stat-avg');
+    if (avgEl && avgs.length) avgEl.textContent = (avgs.reduce((a,b)=>a+b,0)/avgs.length).toFixed(1) + ' ★';
+
+    // ── Cards do catálogo — sem estrelas se não tiver avaliações ──────
+    function updateCard(id, data) {
+      const el = document.getElementById(id);
+      if (!el || !data) return;
+      if (!data.reviews || !data.avg_rating) {
+        el.innerHTML = '<span style="color:var(--muted);font-size:12px">Novo</span>';
+        return;
       }
-      updateCard('stars-financas', s.financas);
-      updateCard('stars-cripto',   s.cripto);
-    })
-    .catch(() => {});
+      const a = parseFloat(data.avg_rating);
+      el.innerHTML = '<span class="s">' + '★'.repeat(Math.round(a)) + '☆'.repeat(5-Math.round(a)) + '</span> ' + data.avg_rating + ' · ' + data.reviews + ' avaliações';
+    }
+    updateCard('stars-financas', stats.financas);
+    updateCard('stars-cripto',   stats.cripto);
+  })
+  .catch(() => {});
 
-  // Avaliações na seção
+  // ── Avaliações na seção ────────────────────────────────────────────
   Promise.all(['financas','cripto'].map(p => fetch('/api/reviews?produto='+p).then(r=>r.json())))
     .then(([rf, rc]) => {
-      const all = [...(Array.isArray(rf)?rf:[]), ...(Array.isArray(rc)?rc:[])];
+      const all  = [...(Array.isArray(rf)?rf:[]), ...(Array.isArray(rc)?rc:[])];
       const grid = document.getElementById('home-reviews-grid');
       const sec  = document.getElementById('avaliacoes-section');
       if (!all.length) { if(sec) sec.style.display='none'; return; }
-
-      grid.innerHTML = all.map(r => `
-        <div class="testimonial-card">
-          <div class="stars-small">${'★'.repeat(r.rating)}${'☆'.repeat(5-r.rating)}</div>
-          <p>${r.body}</p>
-          <div class="author">${r.author}${r.city ? ' · '+r.city : ''}</div>
-        </div>`).join('');
+      grid.innerHTML = all.map(r =>
+        '<div class="testimonial-card">' +
+        '<div class="stars-small">' + '★'.repeat(r.rating) + '☆'.repeat(5-r.rating) + '</div>' +
+        '<p>' + r.body + '</p>' +
+        '<div class="author">' + r.author + (r.city ? ' · '+r.city : '') + '</div>' +
+        '</div>'
+      ).join('');
     })
     .catch(() => { const s=document.getElementById('avaliacoes-section'); if(s) s.style.display='none'; });
 </script>
