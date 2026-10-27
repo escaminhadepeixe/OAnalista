@@ -115,8 +115,8 @@
       <p>Ebooks práticos para quem quer organizar o dinheiro, começar a investir e acumular criptoativos — do jeito certo e sem gastar uma fortuna.</p>
       <a href="#catalogo" class="hero-cta">Ver todos os ebooks</a>
       <div class="hero-stats">
-        <div class="stat-item"><strong>+500</strong><span>leitores</span></div>
-        <div class="stat-item"><strong>5.0 ★</strong><span>avaliação média</span></div>
+        <div class="stat-item"><strong id="stat-leitores">+500</strong><span>leitores</span></div>
+        <div class="stat-item"><strong id="stat-avg">5.0 ★</strong><span>avaliação média</span></div>
       </div>
     </div>
     <div class="hero-books">
@@ -173,7 +173,7 @@
         <div class="card-category">Finanças pessoais</div>
         <div class="card-title">Finanças Pessoais na Prática</div>
         <div class="card-desc">Do controle do dinheiro ao primeiro investimento em renda fixa — sem complicação.</div>
-        <div class="card-stars"><span class="s">★★★★★</span> 5.0 · 38 avaliações</div>
+        <div class="card-stars" id="stars-financas"><span class="s">★★★★★</span> 5.0 · 38 avaliações</div>
         <div class="card-footer">
           <div class="card-price"><sup>R$</sup> 29,90</div>
           <button class="card-btn">Ver produto</button>
@@ -200,7 +200,7 @@
         <div class="card-category" style="color:#16A34A;">Criptomoedas</div>
         <div class="card-title">Renda Passiva em Criptomoedas</div>
         <div class="card-desc">Como acumular frações de Bitcoin e outros criptoativos sem gastar nada do seu bolso.</div>
-        <div class="card-stars"><span class="s">★★★★★</span> 5.0 · 21 avaliações</div>
+        <div class="card-stars" id="stars-cripto"><span class="s">★★★★★</span> 5.0 · 21 avaliações</div>
         <div class="card-footer">
           <div class="card-price"><sup>R$</sup> 29,90</div>
           <button class="card-btn">Ver produto</button>
@@ -241,5 +241,31 @@
     </div>
   </div>
 </footer>
+
+<script>
+  fetch('/api/stats')
+    .then(r => r.json())
+    .then(s => {
+      // Hero
+      const lEl = document.getElementById('stat-leitores');
+      const aEl = document.getElementById('stat-avg');
+      if (lEl && s.total_leitores > 0) lEl.textContent = '+' + s.total_leitores;
+
+      const avgs = [s.financas?.avg_rating, s.cripto?.avg_rating].filter(Boolean).map(Number);
+      if (aEl && avgs.length) aEl.textContent = (avgs.reduce((a,b) => a+b, 0) / avgs.length).toFixed(1) + ' ★';
+
+      // Cards
+      function updateCard(id, data) {
+        const el = document.getElementById(id);
+        if (!el || !data) return;
+        const avg = data.avg_rating || '5.0';
+        const n   = data.reviews || 0;
+        el.innerHTML = `<span class="s">${'★'.repeat(Math.round(avg))}${'☆'.repeat(5 - Math.round(avg))}</span> ${avg}${n > 0 ? ' · ' + n + ' avaliações' : ''}`;
+      }
+      updateCard('stars-financas', s.financas);
+      updateCard('stars-cripto',   s.cripto);
+    })
+    .catch(() => {});
+</script>
 </body>
 </html>

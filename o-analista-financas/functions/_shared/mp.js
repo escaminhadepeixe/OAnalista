@@ -1,5 +1,5 @@
 // Mercado Pago — tenta Orders API v2, com fallback para Payments API v1
-const precos = { financas: 29.90, cripto: 29.90 };
+const precos = { financas: 0.01, cripto: 0.01 }; // ⚠️ TESTE — mudar para 29.90 antes de lançar
 
 export async function criarPix(env, { email, nome, produto }) {
   const valor = precos[produto];

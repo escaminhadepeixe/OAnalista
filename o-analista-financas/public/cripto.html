@@ -129,10 +129,10 @@
   <div class="product-info">
     <h1>Renda Passiva em Criptomoedas</h1>
     <p class="subtitle">Acumule frações de Bitcoin e outros criptoativos sem gastar nada do seu bolso</p>
-    <div class="stars">
-      <span class="star-icons">★★★★★</span>
-      <strong>5.0</strong>
-      <span>· 21 avaliações</span>
+    <div class="stars" id="product-stars">
+      <span class="star-icons" id="star-icons">★★★★★</span>
+      <strong id="avg-rating">5.0</strong>
+      <span id="review-count">· carregando…</span>
     </div>
     <hr class="divider">
     <h2>O que você vai aprender</h2>
@@ -251,5 +251,26 @@
     </div>
   </div>
 </footer>
+
+<script>
+  fetch('/api/stats')
+    .then(r => r.json())
+    .then(s => {
+      const data = s['cripto'];
+      if (!data) return;
+      const avg = data.avg_rating || '5.0';
+      const n   = data.reviews   || 0;
+      const leitores = data.leitores || 0;
+      const stars = '★'.repeat(Math.round(avg)) + '☆'.repeat(5 - Math.round(avg));
+
+      const ic = document.getElementById('star-icons');
+      const ar = document.getElementById('avg-rating');
+      const rc = document.getElementById('review-count');
+      if (ic) ic.textContent = stars;
+      if (ar) ar.textContent = avg;
+      if (rc) rc.textContent = n > 0 ? '· ' + n + ' avaliações' : (leitores > 0 ? '· ' + leitores + ' leitores' : '· seja o primeiro!');
+    })
+    .catch(() => {});
+</script>
 </body>
 </html>

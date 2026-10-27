@@ -107,10 +107,10 @@
   <div class="product-info">
     <h1>Finanças Pessoais na Prática</h1>
     <p class="subtitle">Do controle do dinheiro ao portfólio com ações, FIIs, cripto e ativos internacionais</p>
-    <div class="stars">
-      <span class="star-icons">★★★★★</span>
-      <strong>5.0</strong>
-      <span>· 38 avaliações</span>
+    <div class="stars" id="product-stars">
+      <span class="star-icons" id="star-icons">★★★★★</span>
+      <strong id="avg-rating">5.0</strong>
+      <span id="review-count">· carregando…</span>
     </div>
     <hr class="divider">
     <h2>O que você vai aprender</h2>
@@ -222,5 +222,26 @@
     </div>
   </div>
 </footer>
+
+<script>
+  fetch('/api/stats')
+    .then(r => r.json())
+    .then(s => {
+      const data = s['financas'];
+      if (!data) return;
+      const avg = data.avg_rating || '5.0';
+      const n   = data.reviews   || 0;
+      const leitores = data.leitores || 0;
+      const stars = '★'.repeat(Math.round(avg)) + '☆'.repeat(5 - Math.round(avg));
+
+      const ic = document.getElementById('star-icons');
+      const ar = document.getElementById('avg-rating');
+      const rc = document.getElementById('review-count');
+      if (ic) ic.textContent = stars;
+      if (ar) ar.textContent = avg;
+      if (rc) rc.textContent = n > 0 ? '· ' + n + ' avaliações' : (leitores > 0 ? '· ' + leitores + ' leitores' : '· seja o primeiro!');
+    })
+    .catch(() => {});
+</script>
 </body>
 </html>
