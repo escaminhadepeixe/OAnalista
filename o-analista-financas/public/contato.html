@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Contato — O Analista Finanças</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+  <style>
+    :root{--bg:#FFFFFF;--bg-subtle:#F7F8FA;--nav:#0D1B2E;--text:#1A1F2E;--muted:#6B7280;--border:#E5E7EB;--accent:#1B56D6;--accent-hover:#1445B0}
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:'Inter',system-ui,sans-serif;background:var(--bg-subtle);color:var(--text);font-size:15px;line-height:1.6;min-height:100vh;display:flex;flex-direction:column}
+    a{color:var(--accent);text-decoration:none}
+    .topbar{background:var(--nav);color:#94A3B8;font-size:12px;text-align:center;padding:7px 16px}
+    header{background:var(--bg);border-bottom:1px solid var(--border);padding:0 40px;height:60px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+    .logo{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:var(--nav);text-decoration:none}
+    .header-actions{display:flex;gap:20px;font-size:14px;color:var(--muted)}
+    .header-actions a:hover{color:var(--text)}
+    main{flex:1;display:flex;align-items:center;justify-content:center;padding:48px 20px}
+    .card{background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:48px 40px;max-width:520px;width:100%;box-shadow:0 4px 24px rgba(0,0,0,.06)}
+    h1{font-family:'Playfair Display',serif;font-size:28px;font-weight:700;margin-bottom:10px}
+    .subtitle{font-size:15px;color:var(--muted);margin-bottom:32px;line-height:1.6}
+    .contact-item{display:flex;align-items:center;gap:16px;padding:18px;border:1px solid var(--border);border-radius:8px;margin-bottom:14px;transition:border-color .15s}
+    .contact-item:hover{border-color:var(--accent)}
+    .contact-icon{font-size:24px;flex-shrink:0;width:40px;text-align:center}
+    .contact-label{font-size:12px;color:var(--muted);font-weight:500;text-transform:uppercase;letter-spacing:.05em;margin-bottom:2px}
+    .contact-value{font-size:15px;font-weight:600;color:var(--text)}
+    .btn-contact{display:inline-block;background:var(--accent);color:#fff;padding:12px 24px;border-radius:6px;font-size:14px;font-weight:600;margin-top:20px;transition:background .15s;text-decoration:none}
+    .btn-contact:hover{background:var(--accent-hover)}
+    .note{font-size:13px;color:var(--muted);margin-top:24px;padding-top:20px;border-top:1px solid var(--border);line-height:1.6}
+    footer{background:var(--nav);color:#64748B;padding:32px 40px;font-size:13px;margin-top:auto}
+    .footer-inner{max-width:1080px;margin:0 auto;display:flex;justify-content:space-between;align-items:flex-start;gap:40px;flex-wrap:wrap}
+    .footer-logo{font-family:'Playfair Display',serif;font-size:18px;color:#F1F5F9;margin-bottom:8px}
+    .footer-copy{font-size:12px;color:#475569;margin-top:8px}
+    .footer-links{display:flex;flex-direction:column;gap:8px}
+    .footer-links a{color:#64748B}
+    .footer-links a:hover{color:#94A3B8}
+  </style>
+</head>
+<body>
+<div class="topbar">Entrega imediata por e-mail &nbsp;·&nbsp; Pagamento 100% seguro &nbsp;·&nbsp; Acesso vitalício</div>
+<header>
+  <a class="logo" href="home.html">O Analista Finanças</a>
+  <div class="header-actions">
+    <a href="home.html">← Voltar</a>
+    <a href="login.html">Já comprei</a>
+  </div>
+</header>
+<main>
+  <div class="card">
+    <h1>Entre em contato</h1>
+    <p class="subtitle">Tem dúvidas sobre algum ebook, problemas com acesso ou quer deixar uma sugestão? Fale comigo diretamente.</p>
+
+    <div class="contact-item">
+      <div class="contact-icon">📧</div>
+      <div>
+        <div class="contact-label">E-mail</div>
+        <div class="contact-value">oanalistafinancas@gmail.com</div>
+      </div>
+    </div>
+
+    <div class="contact-item">
+      <a href="https://www.youtube.com/@OAnalistaFinanças" target="_blank" rel="noopener" style="display:flex;align-items:center;gap:16px;width:100%;text-decoration:none;color:inherit">
+        <div class="contact-icon">▶</div>
+        <div>
+          <div class="contact-label">Canal no YouTube</div>
+          <div class="contact-value">@OAnalistaFinanças</div>
+        </div>
+      </a>
+    </div>
+
+    <a href="mailto:oanalistafinancas@gmail.com" class="btn-contact">Enviar e-mail →</a>
+
+    <p class="note">Problemas com acesso após a compra? Informe o e-mail utilizado no checkout e o produto adquirido. Respondemos em até 24 horas nos dias úteis.</p>
+  </div>
+</main>
+<footer>
+  <div class="footer-inner">
+    <div>
+      <div class="footer-logo">O Analista Finanças</div>
+      <p>Conteúdo prático sobre finanças pessoais e criptomoedas.</p>
+      <p class="footer-copy">© 2024 O Analista Finanças · Todos os direitos reservados</p>
+    </div>
+    <div class="footer-links">
+      <a href="privacidade.html">Política de privacidade</a>
+      <a href="termos.html">Termos de uso</a>
+      <a href="contato.html">Contato</a>
+    </div>
+  </div>
+</footer>
+</body>
+</html>
