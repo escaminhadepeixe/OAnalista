@@ -178,24 +178,34 @@
 <div class="section-wrap" style="background:var(--bg);border-top:1px solid var(--border)">
   <div class="section-inner">
     <h2>O que quem leu está falando</h2>
-    <div class="testimonials-grid">
-      <div class="testimonial-card">
-        <div class="stars-small">★★★★★</div>
-        <p>Comprei achando que era mais um ebook de "organize suas finanças". Quando cheguei nos capítulos de FII e checklist de ações percebi que é um guia completo de verdade. Do básico até a carteira pronta.</p>
-        <div class="author">Mariana S. · São Paulo, SP</div>
-      </div>
-      <div class="testimonial-card">
-        <div class="stars-small">★★★★★</div>
-        <p>O capítulo da Mentalidade de Ferro mudou minha cabeça. Eu era exatamente o investidor que vendia no pânico. Agora entendo o que é histeria de mercado e consigo ignorar manchete de jornal.</p>
-        <div class="author">Rafael T. · Belo Horizonte, MG</div>
-      </div>
-      <div class="testimonial-card">
-        <div class="stars-small">★★★★★</div>
-        <p>O Triângulo dos Investimentos me salvou de uma furada enorme — alguém me ofereceu exatamente o que o ebook descreve como golpe. Reconheci na hora. Valeu cada centavo.</p>
-        <div class="author">Camila O. · Curitiba, PR</div>
-      </div>
+        <div class="testimonials-grid" id="reviews-grid">
+      <p style="color:var(--muted);font-size:14px">Carregando avaliações…</p>
     </div>
+
+    <script>
+      fetch('/api/reviews?produto=financas')
+        .then(r => r.json())
+        .then(reviews => {
+          const grid = document.getElementById('reviews-grid');
+          if (!Array.isArray(reviews) || !reviews.length) {
+            grid.innerHTML = '<p style="color:var(--muted);font-size:14px">Seja o primeiro a avaliar!</p>';
+            return;
+          }
+          grid.innerHTML = reviews.map(r => `
+            <div class="testimonial-card">
+              <div class="stars-small">${'★'.repeat(r.rating)}${r.rating < 5 ? '☆'.repeat(5 - r.rating) : ''}</div>
+              <p>${r.body}</p>
+              <div class="author">${r.author}${r.city ? ' · ' + r.city : ''}</div>
+            </div>
+          `).join('');
+        })
+        .catch(() => {
+          document.getElementById('reviews-grid').innerHTML =
+            '<p style="color:var(--muted);font-size:14px">Não foi possível carregar as avaliações.</p>';
+        });
+    </script>
   </div>
+</div>
 </div>
 
 <footer>

@@ -65,3 +65,21 @@ $$ LANGUAGE plpgsql;
 
 -- ── Atualização (rode se o banco já existia) ─────────────────────────────
 ALTER TABLE purchases ADD COLUMN IF NOT EXISTS recovery_sent_at TIMESTAMPTZ;
+
+-- ── Avaliações ────────────────────────────────────────────────────────────
+CREATE TABLE IF NOT EXISTS reviews (
+  id         UUID        PRIMARY KEY DEFAULT gen_random_uuid(),
+  product_id TEXT        NOT NULL CHECK (product_id IN ('financas','cripto')),
+  author     TEXT        NOT NULL,
+  city       TEXT,
+  rating     INTEGER     DEFAULT 5 CHECK (rating BETWEEN 1 AND 5),
+  body       TEXT        NOT NULL,
+  approved   BOOLEAN     DEFAULT FALSE,
+  source     TEXT        DEFAULT 'site',   -- 'site' ou 'ggmax'
+  created_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+CREATE INDEX IF NOT EXISTS idx_reviews_product ON reviews(product_id, approved);
+
+-- Atualização (rode se o banco já existia):
+-- CREATE TABLE IF NOT EXISTS reviews (...) -- já está acima

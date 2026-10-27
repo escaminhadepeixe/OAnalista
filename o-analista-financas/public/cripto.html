@@ -207,24 +207,34 @@
 <div class="section-wrap" style="background:var(--bg);border-top:1px solid var(--border)">
   <div class="section-inner">
     <h2>O que quem leu está falando</h2>
-    <div class="testimonials-grid">
-      <div class="testimonial-card">
-        <div class="stars-small">★★★★★</div>
-        <p>Instalei o Brave, me cadastrei na Brasil Bitcoin e coloquei o Nodle no celular em menos de uma tarde. Agora é só esperar acumular. Conteúdo direto ao ponto.</p>
-        <div class="author">Bruno M. · Recife, PE</div>
-      </div>
-      <div class="testimonial-card">
-        <div class="stars-small">★★★★★</div>
-        <p>Já usava o Brave mas nem sabia que dava pra ganhar BAT. Com esse ebook aprendi a ativar as recompensas e também entrei no programa da Brasil Bitcoin. Vale muito.</p>
-        <div class="author">Fernanda L. · Florianópolis, SC</div>
-      </div>
-      <div class="testimonial-card">
-        <div class="stars-small">★★★★★</div>
-        <p>O módulo do Honeygain com JumpTask foi o que mais me surpreendeu. Não sabia que era possível sacar antes de acumular 20 dólares. Já saquei meu primeiro JMPT.</p>
-        <div class="author">Carlos A. · Porto Alegre, RS</div>
-      </div>
+        <div class="testimonials-grid" id="reviews-grid">
+      <p style="color:var(--muted);font-size:14px">Carregando avaliações…</p>
     </div>
+
+    <script>
+      fetch('/api/reviews?produto=cripto')
+        .then(r => r.json())
+        .then(reviews => {
+          const grid = document.getElementById('reviews-grid');
+          if (!Array.isArray(reviews) || !reviews.length) {
+            grid.innerHTML = '<p style="color:var(--muted);font-size:14px">Seja o primeiro a avaliar!</p>';
+            return;
+          }
+          grid.innerHTML = reviews.map(r => `
+            <div class="testimonial-card">
+              <div class="stars-small">${'★'.repeat(r.rating)}${r.rating < 5 ? '☆'.repeat(5 - r.rating) : ''}</div>
+              <p>${r.body}</p>
+              <div class="author">${r.author}${r.city ? ' · ' + r.city : ''}</div>
+            </div>
+          `).join('');
+        })
+        .catch(() => {
+          document.getElementById('reviews-grid').innerHTML =
+            '<p style="color:var(--muted);font-size:14px">Não foi possível carregar as avaliações.</p>';
+        });
+    </script>
   </div>
+</div>
 </div>
 
 <footer>

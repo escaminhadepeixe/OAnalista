@@ -43,6 +43,27 @@
     .chapter-nav{display:flex;justify-content:space-between;margin-top:48px;padding-top:24px;border-top:1px solid var(--border)}
     .chapter-nav a{font-size:13px;color:var(--accent);font-weight:500}
     @media(max-width:720px){.sidebar{display:none}.content{margin-left:0}.content-inner{padding:32px 20px 60px}.chapter-title{font-size:22px}}
+  
+    .review-btn{position:fixed;bottom:24px;right:24px;background:var(--accent);color:#fff;border:none;border-radius:50px;padding:12px 20px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;box-shadow:0 4px 12px rgba(0,0,0,.2);z-index:300;transition:background .15s}
+    .review-btn:hover{background:var(--accent-hover)}
+    .modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:400;align-items:center;justify-content:center;padding:20px}
+    .modal-overlay.show{display:flex}
+    .modal{background:#fff;border-radius:12px;padding:32px;max-width:420px;width:100%}
+    .modal h3{font-size:18px;font-weight:700;margin-bottom:6px}
+    .modal p{font-size:14px;color:var(--muted);margin-bottom:20px}
+    .stars-input{display:flex;gap:6px;margin-bottom:16px;font-size:32px;cursor:pointer}
+    .stars-input span{color:#E5E7EB;transition:color .1s;user-select:none}
+    .stars-input span.on{color:#F59E0B}
+    .modal label{display:block;font-size:13px;font-weight:500;margin-bottom:4px}
+    .modal input,.modal textarea{width:100%;padding:10px 12px;border:1px solid var(--border);border-radius:6px;font-size:14px;font-family:inherit;margin-bottom:12px}
+    .modal textarea{height:90px;resize:none}
+    .modal .row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+    .btn-enviar{width:100%;background:var(--accent);color:#fff;border:none;border-radius:6px;padding:12px;font-size:15px;font-weight:600;cursor:pointer;font-family:inherit;transition:background .15s}
+    .btn-enviar:hover{background:var(--accent-hover)}
+    .btn-enviar:disabled{background:#9CA3AF;cursor:not-allowed}
+    .btn-fechar{float:right;background:none;border:none;font-size:20px;cursor:pointer;color:var(--muted);line-height:1}
+    .review-ok{text-align:center;padding:20px 0;display:none}
+    .review-ok .check{font-size:48px;margin-bottom:12px}
   </style>
 </head>
 <body>
@@ -221,6 +242,92 @@
   }
 
   showChapter(1);
+</script>
+
+<button class="review-btn" onclick="abrirModal()">⭐ Avaliar este ebook</button>
+
+<div class="modal-overlay" id="modal-overlay" onclick="fecharModal(event)">
+  <div class="modal">
+    <button class="btn-fechar" onclick="fecharModal()">✕</button>
+    <h3>Deixe sua avaliação</h3>
+    <p>Sua opinião ajuda outras pessoas a conhecerem o ebook.</p>
+
+    <div class="review-ok" id="review-ok">
+      <div class="check">🎉</div>
+      <strong>Obrigado pelo feedback!</strong>
+      <p style="margin-top:8px;color:var(--muted);font-size:14px">Sua avaliação será publicada após revisão.</p>
+    </div>
+
+    <div id="review-form">
+      <div class="stars-input" id="stars">
+        <span onclick="setRating(1)">★</span>
+        <span onclick="setRating(2)">★</span>
+        <span onclick="setRating(3)">★</span>
+        <span onclick="setRating(4)">★</span>
+        <span onclick="setRating(5)">★</span>
+      </div>
+      <div class="row">
+        <div><label>Seu nome</label><input type="text" id="rev-author" placeholder="João Silva"></div>
+        <div><label>Cidade (opcional)</label><input type="text" id="rev-city" placeholder="São Paulo, SP"></div>
+      </div>
+      <label>Seu comentário</label>
+      <textarea id="rev-text" placeholder="O que você achou do ebook?"></textarea>
+      <button class="btn-enviar" id="btn-enviar-rev" onclick="enviarReview()">Enviar avaliação</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  let rating = 5;
+  setRating(5);
+
+  function setRating(n) {
+    rating = n;
+    document.querySelectorAll('#stars span').forEach((s, i) => {
+      s.classList.toggle('on', i < n);
+    });
+  }
+
+  function abrirModal() { document.getElementById('modal-overlay').classList.add('show'); }
+
+  function fecharModal(e) {
+    if (!e || e.target === document.getElementById('modal-overlay') || e.target.classList.contains('btn-fechar')) {
+      document.getElementById('modal-overlay').classList.remove('show');
+    }
+  }
+
+  async function enviarReview() {
+    const author = document.getElementById('rev-author').value.trim();
+    const text   = document.getElementById('rev-text').value.trim();
+    if (!author || !text) { alert('Preencha seu nome e o comentário.'); return; }
+
+    const btn = document.getElementById('btn-enviar-rev');
+    btn.disabled    = true;
+    btn.textContent = 'Enviando…';
+
+    try {
+      const res  = await fetch('/api/reviews', {
+        method:  'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body:    JSON.stringify({
+          product_id: 'cripto',
+          author,
+          city:   document.getElementById('rev-city').value.trim(),
+          rating,
+          text
+        })
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error);
+
+      document.getElementById('review-form').style.display = 'none';
+      document.getElementById('review-ok').style.display   = 'block';
+    } catch (e) {
+      btn.disabled    = false;
+      btn.textContent = 'Enviar avaliação';
+      alert('Erro ao enviar: ' + e.message);
+    }
+  }
 </script>
 </body>
 </html>
