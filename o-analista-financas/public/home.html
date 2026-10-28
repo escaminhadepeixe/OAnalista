@@ -88,6 +88,18 @@
     .footer-links a { color: #64748B; }
     .footer-links a:hover { color: #94A3B8; }
 
+
+    /* ── Carrossel do hero no celular ── */
+    @media (max-width: 860px) {
+      .hero-slide { padding: 28px 20px 52px !important; }
+      .hero-slide .hero-inner { display: flex; flex-direction: column; gap: 18px; }
+      .hero-cover { order: -1; justify-content: flex-start !important; }
+      .hero-cover svg { width: 92px; height: auto; box-shadow: 0 6px 18px rgba(0,0,0,.45) !important; }
+      .hero-slide .hero-text h1 { font-size: 28px; }
+      .hero-slide .hero-text > p { font-size: 15px; }
+      .hero-points { margin: 14px 0 16px !important; gap: 6px !important; }
+      .hero-points li:nth-child(n+3) { display: none !important; }
+    }
     @media (max-width: 860px) {
       header { padding: 0 20px; }
       nav { display: none; }
@@ -120,13 +132,13 @@
   <div id="ht" style="display:flex;will-change:transform;transition:transform .7s cubic-bezier(.4,0,.2,1)">
 
     <!-- SLIDE 1: Finanças -->
-    <div style="min-width:100%;padding:52px 40px;box-sizing:border-box">
+    <div class="hero-slide" style="min-width:100%;padding:52px 40px;box-sizing:border-box">
       <div class="hero-inner">
         <div class="hero-text">
           <p style="font-size:11px;font-weight:700;color:#60A5FA;text-transform:uppercase;letter-spacing:.1em;margin-bottom:10px">Finanças pessoais · 15 capítulos</p>
           <h1>Finanças Pessoais<br>na Prática</h1>
           <p>Do controle do dinheiro ao portfólio com ações, FIIs, cripto e ativos internacionais.</p>
-          <ul style="list-style:none;margin:18px 0 20px;display:flex;flex-direction:column;gap:8px">
+          <ul class="hero-points" style="list-style:none;margin:18px 0 20px;display:flex;flex-direction:column;gap:8px">
             <li style="font-size:13px;color:#94A3B8;display:flex;gap:8px"><span style="color:#60A5FA;flex-shrink:0">✓</span>Por que usar o cartão de crédito para tudo é uma estratégia</li>
             <li style="font-size:13px;color:#94A3B8;display:flex;gap:8px"><span style="color:#60A5FA;flex-shrink:0">✓</span>Reserva de Oportunidade e Emergência — como montar</li>
             <li style="font-size:13px;color:#94A3B8;display:flex;gap:8px"><span style="color:#60A5FA;flex-shrink:0">✓</span>LCI e LCA: Renda Fixa isenta de IR</li>
@@ -135,7 +147,7 @@
           <div id="hr-financas" style="margin-bottom:20px;min-height:18px;font-size:13px;color:#64748B"></div>
           <a href="financas.html" class="hero-cta">Ver produto →</a>
         </div>
-        <div style="display:flex;justify-content:center;align-items:center">
+        <div class="hero-cover" style="display:flex;justify-content:center;align-items:center">
           <svg width="188" height="264" viewBox="0 0 188 264" xmlns="http://www.w3.org/2000/svg" style="border-radius:4px;box-shadow:0 12px 40px rgba(0,0,0,.5)">
             <rect width="188" height="264" rx="3" fill="#0D1B2E"/>
             <rect x="0" y="0" width="13" height="264" rx="2" fill="#1B3660"/>
@@ -150,13 +162,13 @@
     </div>
 
     <!-- SLIDE 2: Cripto -->
-    <div style="min-width:100%;padding:52px 40px;box-sizing:border-box">
+    <div class="hero-slide" style="min-width:100%;padding:52px 40px;box-sizing:border-box">
       <div class="hero-inner">
         <div class="hero-text">
           <p style="font-size:11px;font-weight:700;color:#34D399;text-transform:uppercase;letter-spacing:.1em;margin-bottom:10px">Criptomoedas · 4 módulos</p>
           <h1>Renda Passiva<br>em Criptomoedas</h1>
           <p>Estratégias pouco conhecidas para acumular criptoativos de forma passiva.</p>
-          <ul style="list-style:none;margin:18px 0 20px;display:flex;flex-direction:column;gap:8px">
+          <ul class="hero-points" style="list-style:none;margin:18px 0 20px;display:flex;flex-direction:column;gap:8px">
             <li style="font-size:13px;color:#94A3B8;display:flex;gap:8px"><span style="color:#34D399;flex-shrink:0">✓</span>Como construir uma carteira de criptoativos aos poucos, com baixo esforço</li>
             <li style="font-size:13px;color:#94A3B8;display:flex;gap:8px"><span style="color:#34D399;flex-shrink:0">✓</span>Por que acumular no longo prazo pode valer mais do que vender na hora</li>
             <li style="font-size:13px;color:#94A3B8;display:flex;gap:8px"><span style="color:#34D399;flex-shrink:0">✓</span>Um programa de recompensas recorrentes pouco divulgado</li>
@@ -165,7 +177,7 @@
           <div id="hr-cripto" style="margin-bottom:20px;min-height:18px;font-size:13px;color:#64748B"></div>
           <a href="cripto.html" class="hero-cta" style="background:#16A34A" onmouseover="this.style.background='#15803D'" onmouseout="this.style.background='#16A34A'">Ver produto →</a>
         </div>
-        <div style="display:flex;justify-content:center;align-items:center">
+        <div class="hero-cover" style="display:flex;justify-content:center;align-items:center">
           <svg width="188" height="264" viewBox="0 0 188 264" xmlns="http://www.w3.org/2000/svg" style="border-radius:4px;box-shadow:0 12px 40px rgba(0,0,0,.5)">
             <rect width="188" height="264" rx="3" fill="#0F2218"/>
             <rect x="0" y="0" width="13" height="264" rx="2" fill="#153320"/>
